@@ -9,7 +9,6 @@ function createUser(request, response, next) {
         body: params
     } = request;
 
-
     return Promise
         .resolve()
         .then(() => {
@@ -17,12 +16,12 @@ function createUser(request, response, next) {
                 password,
             } = params;
 
-            return encryptPasswordService(password)
-                .then((password) => Object.assign(params.password, password));
+            return encryptPasswordService.encryptPassword(password)
+                .then((password) => Object.assign(params, {password: password}));
         })
         .then(() => createUserService.createUser(params))
         .then((user) => response.status(201).send(user))
-        .catch(next);
+        .catch((err) => response.status(400).send(err));
 }
 
 function deleteUser(request, response, next) {

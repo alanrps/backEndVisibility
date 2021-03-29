@@ -4,7 +4,7 @@ function createUser(params){
     return new Promise((resolve, reject) => 
         knex('users')
             .insert(params)
-            .then(resolve(params))
+            .then(resolve)
             .catch(reject)
     );
 };

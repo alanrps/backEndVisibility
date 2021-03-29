@@ -1,7 +1,6 @@
 const comparePasswordService = require('../services/users/password/compare-password');
 const searchUserByEmailService = require('../services/users/search-user');
 const generateTokenService = require('../services/authenticate/token');
-const { reject } = require('bcrypt/promises');
 
 function login(request, response, next) {
     const {
@@ -9,14 +8,10 @@ function login(request, response, next) {
         password,
     } = request.body;
 
-    const atributtes = [
-        'password',
-    ];
-
     Promise
         .resolve()
-        .then(() => searchUserByEmailService.searchUserByEmail(email, atributtes))
-        .then((user) => {
+        .then(() => searchUserByEmailService.searchUserByEmail(email, ['password']))
+        .then(([user]) => {
             if (!user) return response.status(412).send({ error: 'User not found' });
 
             return user;
@@ -31,7 +26,7 @@ function login(request, response, next) {
 
                 comparePasswordService.comparePassword(password, encryptPassword)
                     .then((comparisonResult) => {
-                        if (comparisonResult) return response.status(401).send({ error: 'Password incorrect' });
+                        if (!comparisonResult) return response.status(401).send({ error: 'Password incorrect' });
 
                         return null;
                     })
