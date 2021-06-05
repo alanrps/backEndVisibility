@@ -4,8 +4,8 @@ const {
 } = process.env;
 
 function verifyJwt(request, response, next) {
-    const token = request.headers['x-acess-token'];
-    if (!token) return response.status(401).send({ auth: false, message: 'No token provided' });
+    const headerToken = request.headers['x-acess-token'];
+    if (!headerToken) return response.status(401).send({ auth: false, message: 'No token provided' });
 
     const parts = authHeader.split(' ');
 

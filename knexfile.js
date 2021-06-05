@@ -1,12 +1,10 @@
 require('dotenv').config();
 
-// const db_url = `postgres://postgres:${process.env.DB_PASSWORD}@postgres:5432/visibility`;
-
 const connection = {
-  host : 'localhost',
-  user : 'postgres',
-  password : process.env.DB_PASSWORD,
-  database : 'visibility'
+  host : process.env.POSTGRES_HOST || 'localhost',
+  user : process.env.POSTGRES_USER || 'postgres',
+  database : process.env.POSTGRES_DB || 'visibility',
+  password : process.env.POSTGRES_PASSWORD
 };
 
 module.exports = {
