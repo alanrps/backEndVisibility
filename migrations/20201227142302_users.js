@@ -2,7 +2,7 @@
 exports.up = function (knex) {
     return knex.schema.createTable('users', table => {
         table
-            .increments('id');
+            .bigIncrements('id');
         table
             .string('name', 100)
             .notNull();
@@ -20,6 +20,9 @@ exports.up = function (knex) {
             .notNull();
         table
             .enum('genre', ['MALE', 'FEMALE', 'OTHER'])
+            .notNull();
+        table
+            .boolean('is_admin')
             .notNull();
         table
             .dateTime('created_at')

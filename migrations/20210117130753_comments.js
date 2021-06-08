@@ -2,12 +2,12 @@
 exports.up = function (knex) {
     return knex.schema.createTable('comments', table => {
         table
-            .increments('id')
+            .bigIncrements('id')
         table
-            .integer('user_id')
+            .bigInteger('user_id')
             .notNull();
         table
-            .integer('marker_id')
+            .bigInteger('marker_id')
             .notNull();
         table
             .string('description', 100)
@@ -37,5 +37,5 @@ exports.up = function (knex) {
 };
 
 exports.down = function (knex) {
-    knex.schema.dropTable('comments');
+    return knex.schema.dropTable('comments');
 };

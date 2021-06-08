@@ -1,20 +1,25 @@
-
 exports.up = function (knex) {
-    return knex.schema.createTable('markers', table => {
+    return knex.schema.createTable('places', table => {
         table
             .bigIncrements('id');
         table
-            .bigInteger('user_id')
+            .bigInteger('marker_id')
             .notNull();
         table
-            .string('type_marker_id')
+            .string('category_id', 50)
             .notNull();
         table
-            .float('latitude')
+            .string('name', 100)
             .notNull();
         table
-            .float('longitude')
+            .enu('classify', ['ACCESSIBLE', 'NOT ACCESSIBLE', 'PARTIALLY'])
             .notNull();
+        table
+            .enu('space_type', ['PRIVATE', 'PUBLIC'])
+            .notNull();
+        table
+            .string('description', 100)
+            .defaultTo(null);
         table
             .dateTime('created_at')
             .notNull()
@@ -27,18 +32,19 @@ exports.up = function (knex) {
             .dateTime('deleted_at')
             .defaultTo(null);
     })
-        .table('markers', table => {
+        .table('places', table => {
             table
-                .foreign('user_id')
+                .foreign('marker_id')
                 .references('id')
-                .inTable('users');
+                .inTable('markers');
             table
-                .foreign('type_marker_id')
+                .foreign('category_id')
                 .references('id')
-                .inTable('type_markers');
-        });
+                .inTable('categories');
+        })
 };
 
 exports.down = function (knex) {
-    return knex.schema.dropTable('markers');
+    return knex.schema.dropTable('places');
 };
+

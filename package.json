@@ -6,10 +6,12 @@
   "scripts": {
     "start": "node --exec babel-node index",
     "start:dev": "nodemon --exec babel-node index",
-    "up": "knex migrate:latest",
+    "up": "knex migrate:up",
     "down": "knex migrate:rollback",
-    "migrate": "knex migrate:make",
-    "seed": "knex seed:run"
+    "make:migrate": "knex migrate:make",
+    "make:seed": "knex seed:make",
+    "seed": "knex seed:run",
+    "migrate": "knex migrate:latest"
   },
   "dependencies": {
     "@babel/core": "^7.14.3",
