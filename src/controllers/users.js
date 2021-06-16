@@ -1,10 +1,11 @@
-// const searchUserByIdService = require('../services/users/search-user');
-const encryptPasswordService = require('../services/users/password/encrypt-password');
-const createUserService = require('../services/users/create-user');
-const deleteUserService = require('../services/users/delete-user');
-const updateUserService = require('../services/users/update-user');
+import { searchUserByEmail } from '../services/users/search-user';
+import { updateUser as updateUserService } from '../services/users/update-user';
+import { createUser as createUserService } from '../services/users/create-user';
+import { encryptPassword } from '../services/users/password/encrypt-password';
+import { generateToken } from '../services/authenticate/token';
+import PreconditionFailedException from '../exceptions/http/PreconditionFailedException';
 
-function createUser(request, response, next) {
+export function createUser(request, response, next) {
     const {
         body: params,
     } = request;
@@ -13,30 +14,39 @@ function createUser(request, response, next) {
         .resolve()
         .then(() => {
             const {
+                email,
                 password,
             } = params;
 
-            return encryptPasswordService.encryptPassword(password)
+            return searchUserByEmail(email)
+                .then(user => {
+                    if (user) {
+                        throw new PreconditionFailedException(21);
+                    }
+                    return user;
+                })
+                .then(encryptPassword(password))
                 .then(hashPassword => Object.assign(params, { password: hashPassword }));
         })
-        .then(() => createUserService.createUser(params))
+        .then(() => createUserService(params, ['id', 'name', 'phone_number', 'email', 'genre']))
+        .then(userData => generateToken(userData))
         .then(user => response.status(201).send(user))
         .catch(err => response.status(400).send(err));
 }
 
-function deleteUser(request, response, next) {
+export function deleteUser(request, response, next) {
     const {
         id,
     } = request.params;
 
     return Promise
         .resolve(id)
-        .then(deleteUserService.deleteUser)
+        .then(deleteUser)
         .then(() => response.status(204).send({}))
         .catch(next);
 }
 
-function updateUser(request, response, next) {
+export function updateUser(request, response, next) {
     const {
         body: params,
     } = request;
@@ -48,14 +58,10 @@ function updateUser(request, response, next) {
     return Promise
         .resolve()
         // Verificar se o user existe
-        .then(() => updateUserService.updateUser(id, params))
+        .then(() => updateUserService(id, params))
         .then(() => response.status(200).send({}))
         .catch(next);
 }
 
-module.exports = {
-    createUser,
-    deleteUser,
-    updateUser,
-};
+export default {};
 

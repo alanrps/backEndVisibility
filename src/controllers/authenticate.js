@@ -2,7 +2,7 @@ const comparePasswordService = require('../services/users/password/compare-passw
 const searchUserByEmailService = require('../services/users/search-user');
 const generateTokenService = require('../services/authenticate/token');
 
-function login(request, response, next) {
+export function login(request, response, next) {
     const {
         email,
         password,
@@ -37,6 +37,4 @@ function login(request, response, next) {
         .catch(next);
 }
 
-module.exports = {
-    login,
-};
+export default {};

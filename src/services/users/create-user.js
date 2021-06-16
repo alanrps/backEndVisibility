@@ -1,12 +1,10 @@
 const knex = require('../../../database');
 
-function createUser(params) {
+export function createUser(params, returnData = []) {
     return new Promise((resolve, reject) => knex('users')
-        .insert(params)
+        .insert(params, returnData)
         .then(resolve)
         .catch(reject));
 }
 
-module.exports = {
-    createUser,
-};
+export default {};

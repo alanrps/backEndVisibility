@@ -8,10 +8,9 @@ const controllerAuthenticate = require('./src/controllers/authenticate');
 // const auth = authMiddleware.verifyJwt;
 
 router.post('/authenticate', controllerAuthenticate.login);
-
 router.post('/user', controllerUsers.createUser);
 
-router.delete('/users/:id', controllerUsers.deleteUser);
+// router.delete('/users/:id', controllerUsers.deleteUser);
 router.patch('/users/:id', controllerUsers.updateUser);
 
 router.post('/markers/:type_marker_id', controllerMarkers.createMarker);
