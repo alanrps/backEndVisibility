@@ -1,6 +1,5 @@
 // const env = process.env.ENVIRONMENT || 'development';
-
-const { development } = require('./knexfile');
+import { development } from './knexfile';
 
 const {
     client,
@@ -13,7 +12,7 @@ const knex = require('knex')({
     client,
     connection,
     migrations,
-    seeds
+    seeds,
 });
 
 module.exports = knex;

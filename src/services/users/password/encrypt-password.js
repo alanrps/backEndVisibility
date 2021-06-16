@@ -1,14 +1,12 @@
 const bcrypt = require('bcrypt');
 
 function encryptPassword(password) {
-    const saltRounds = 10;
+    const rounds = 10;
 
-    return new Promise((resolve, reject) =>
-        bcrypt.genSalt(saltRounds)
-            .then((saltRounds) => bcrypt.hash(password, saltRounds))
-            .then(resolve)
-            .catch(reject)
-    );
+    return new Promise((resolve, reject) => bcrypt.genSalt(rounds)
+        .then(saltRounds => bcrypt.hash(password, saltRounds))
+        .then(resolve)
+        .catch(reject));
 }
 
 module.exports = {

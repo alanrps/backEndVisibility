@@ -1,11 +1,9 @@
 const bcrypt = require('bcrypt');
 
 function comparePassword(password, encryptPassword) {
-    return new Promise((resolve, reject) =>
-        bcrypt.compare(password, encryptPassword)
+    return new Promise((resolve, reject) => bcrypt.compare(password, encryptPassword)
         .then(resolve)
-        .catch(reject)
-    );
+        .catch(reject));
 }
 
 module.exports = {

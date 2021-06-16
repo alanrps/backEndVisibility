@@ -1,0 +1,7 @@
+node_modules
+postgres-data
+database/migrations
+database/seeds
+database/stubs
+bin
+**.mwbbak

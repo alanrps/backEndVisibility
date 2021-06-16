@@ -1,43 +1,43 @@
 require('dotenv').config();
 
 const connection = {
-  host : process.env.POSTGRES_HOST || 'localhost',
-  user : process.env.POSTGRES_USER || 'postgres',
-  database : process.env.POSTGRES_DB || 'visibility',
-  password : process.env.POSTGRES_PASSWORD
+    host: process.env.POSTGRES_HOST || 'localhost',
+    user: process.env.POSTGRES_USER || 'postgres',
+    database: process.env.POSTGRES_DB || 'visibility',
+    password: process.env.POSTGRES_PASSWORD,
 };
 
 module.exports = {
-  development: {
-    client: 'pg',
-    connection,
-    migrations: {
-      directory: './migrations',
+    development: {
+        client: 'pg',
+        connection,
+        migrations: {
+            directory: './migrations',
+        },
+        seeds: {
+            directory: './seeds',
+        },
     },
-    seeds: { 
-      directory: './seeds' 
-    },
-  },
 
-  testing: {
-    client: 'pg',
-    connection,
-    migrations: {
-      directory: './migrations',
+    testing: {
+        client: 'pg',
+        connection,
+        migrations: {
+            directory: './migrations',
+        },
+        seeds: {
+            directory: './seeds',
+        },
     },
-    seeds: { 
-      directory: './seeds' 
-    },
-  },
 
-  production: {
-    client: 'pg',
-    connection,
-    migrations: {
-      directory: './migrations',
+    production: {
+        client: 'pg',
+        connection,
+        migrations: {
+            directory: './migrations',
+        },
+        seeds: {
+            directory: './seeds',
+        },
     },
-    seeds: { 
-      directory: './seeds' 
-    },
-  },
 };

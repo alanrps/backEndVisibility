@@ -16,29 +16,27 @@ function login(request, response, next) {
 
             return user;
         })
-        .then(user => {
-            return new Promise((resolve, reject) => {
+        .then(user => new Promise((resolve, reject) => {
 
-                const {
-                    id,
-                    password: encryptPassword,
-                } = user;
+            const {
+                id,
+                password: encryptPassword,
+            } = user;
 
-                comparePasswordService.comparePassword(password, encryptPassword)
-                    .then((comparisonResult) => {
-                        if (!comparisonResult) return response.status(401).send({ error: 'Password incorrect' });
+            comparePasswordService.comparePassword(password, encryptPassword)
+                .then(comparisonResult => {
+                    if (!comparisonResult) return response.status(401).send({ error: 'Password incorrect' });
 
-                        return null;
-                    })
-                    .then(() => generateTokenService.generateToken(id))
-                    .then(resolve)
-                    .catch(reject);
-            })
-        })
-        .then((token) => response.status(200).send({token}))
-        .catch(next)
+                    return null;
+                })
+                .then(() => generateTokenService.generateToken(id))
+                .then(resolve)
+                .catch(reject);
+        }))
+        .then(token => response.status(200).send({ token }))
+        .catch(next);
 }
 
 module.exports = {
     login,
-}
+};

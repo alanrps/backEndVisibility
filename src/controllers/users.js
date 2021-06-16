@@ -1,4 +1,4 @@
-const searchUserByIdService = require('../services/users/search-user');
+// const searchUserByIdService = require('../services/users/search-user');
 const encryptPasswordService = require('../services/users/password/encrypt-password');
 const createUserService = require('../services/users/create-user');
 const deleteUserService = require('../services/users/delete-user');
@@ -6,7 +6,7 @@ const updateUserService = require('../services/users/update-user');
 
 function createUser(request, response, next) {
     const {
-        body: params
+        body: params,
     } = request;
 
     return Promise
@@ -17,11 +17,11 @@ function createUser(request, response, next) {
             } = params;
 
             return encryptPasswordService.encryptPassword(password)
-                .then((password) => Object.assign(params, {password: password}));
+                .then(hashPassword => Object.assign(params, { password: hashPassword }));
         })
         .then(() => createUserService.createUser(params))
-        .then((user) => response.status(201).send(user))
-        .catch((err) => response.status(400).send(err));
+        .then(user => response.status(201).send(user))
+        .catch(err => response.status(400).send(err));
 }
 
 function deleteUser(request, response, next) {
@@ -57,5 +57,5 @@ module.exports = {
     createUser,
     deleteUser,
     updateUser,
-}
+};
 
