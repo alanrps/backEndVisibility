@@ -10,28 +10,27 @@ export function createUser(request, response, next) {
         body: params,
     } = request;
 
-    return Promise
-        .resolve()
-        .then(() => {
-            const {
-                email,
-                password,
-            } = params;
+    const {
+        email,
+        password,
+    } = params;
 
-            return searchUserByEmail(email)
-                .then(user => {
-                    if (user) {
-                        throw new PreconditionFailedException(21);
-                    }
-                    return user;
-                })
-                .then(encryptPassword(password))
-                .then(hashPassword => Object.assign(params, { password: hashPassword }));
+    return searchUserByEmail(email)
+        .then(user => {
+            if (user.length) {
+                throw new PreconditionFailedException(21);
+            }
+            return user;
         })
-        .then(() => createUserService(params, ['id', 'name', 'phone_number', 'email', 'genre']))
-        .then(userData => generateToken(userData))
-        .then(user => response.status(201).send(user))
-        .catch(err => response.status(400).send(err));
+        .then(() => encryptPassword(password))
+        .then(hashPassword => Object.assign(params, { password: hashPassword }))
+        .then(() => createUserService(params, ['id', 'name', 'phone_number', 'email', 'genre'])) // Add birth_date
+        .then(([userData]) => Promise
+            .resolve()
+            .then(() => generateToken(userData))
+            .then(token => Object.assign(userData, { token })))
+        .then(userAndToken => response.status(201).send(userAndToken))
+        .catch(next);
 }
 
 export function deleteUser(request, response, next) {

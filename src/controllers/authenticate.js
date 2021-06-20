@@ -1,6 +1,7 @@
 const comparePasswordService = require('../services/users/password/compare-password');
 const searchUserByEmailService = require('../services/users/search-user');
 const generateTokenService = require('../services/authenticate/token');
+const NotFoundException = require('../exceptions/http/NotFoundException');
 
 export function login(request, response, next) {
     const {
@@ -10,26 +11,26 @@ export function login(request, response, next) {
 
     Promise
         .resolve()
-        .then(() => searchUserByEmailService.searchUserByEmail(email, ['password']))
+        .then(() => searchUserByEmailService.searchUserByEmail(email, ['id', 'phone_number', 'email', 'password']))
         .then(([user]) => {
-            if (!user) return response.status(412).send({ error: 'User not found' });
-
+            if (!user) {
+                throw new NotFoundException(23);
+            }
             return user;
         })
         .then(user => new Promise((resolve, reject) => {
 
             const {
-                id,
                 password: encryptPassword,
             } = user;
 
-            comparePasswordService.comparePassword(password, encryptPassword)
+            return comparePasswordService.comparePassword(password, encryptPassword)
                 .then(comparisonResult => {
                     if (!comparisonResult) return response.status(401).send({ error: 'Password incorrect' });
 
                     return null;
                 })
-                .then(() => generateTokenService.generateToken(id))
+                .then(() => generateTokenService.generateToken(user))
                 .then(resolve)
                 .catch(reject);
         }))

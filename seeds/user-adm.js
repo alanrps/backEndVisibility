@@ -2,7 +2,6 @@
 exports.seed = knex => knex('users').del()
     .then(() => knex('users').insert(
         {
-            id: 1,
             name: 'ADMIN',
             phone_number: '99808-3017',
             email: 'alansantana@alunos.utfpr.edu.br',

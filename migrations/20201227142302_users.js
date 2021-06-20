@@ -22,6 +22,7 @@ exports.up = knex => knex.schema.createTable('users', table => {
         .notNull();
     table
         .boolean('is_admin')
+        .defaultTo(false)
         .notNull();
     table
         .dateTime('created_at')

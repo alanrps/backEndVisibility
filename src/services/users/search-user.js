@@ -1,6 +1,6 @@
 const knex = require('../../../database');
 
-export function searchUserById(id, atributtes) {
+export function searchUserById(id, atributtes = ['*']) {
     return new Promise((resolve, reject) => knex({ us: 'users' })
         .select(atributtes)
         .where('us.id', '=', id)
@@ -9,7 +9,7 @@ export function searchUserById(id, atributtes) {
         .catch(reject));
 }
 
-export function searchUserByEmail(email, atributtes) {
+export function searchUserByEmail(email, atributtes = ['*']) {
     return new Promise((resolve, reject) => knex({ us: 'users' })
         .select(atributtes)
         .where('us.email', '=', email)
