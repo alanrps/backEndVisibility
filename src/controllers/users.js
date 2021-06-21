@@ -1,9 +1,10 @@
-import { searchUserByEmail } from '../services/users/search-user';
+import { searchUserByEmail, searchUserById } from '../services/users/search-user';
 import { updateUser as updateUserService } from '../services/users/update-user';
 import { createUser as createUserService } from '../services/users/create-user';
-import { encryptPassword } from '../services/users/password/encrypt-password';
 import { generateToken } from '../services/authenticate/token';
 import PreconditionFailedException from '../exceptions/http/PreconditionFailedException';
+import { comparePassword } from '../services/users/password/compare-password';
+import { encryptPassword } from '../services/users/password/encrypt-password';
 
 export function createUser(request, response, next) {
     const {
@@ -47,18 +48,48 @@ export function deleteUser(request, response, next) {
 
 export function updateUser(request, response, next) {
     const {
-        body: params,
+        params: {
+            user_id: userId,
+        },
+        body: userData,
     } = request;
 
-    const {
-        id,
-    } = request.params;
+    return searchUserById(userId)
+        .then(user => {
+            if (!user) {
+                throw new PreconditionFailedException(23);
+            }
+            return user;
+        })
+        .then(() => updateUserService(userId, userData, ['id', 'name', 'phone_number', 'email', 'birth_date', 'genre']))
+        .then(([updatedUser]) => response.status(200).send(updatedUser))
+        .catch(next);
+}
 
-    return Promise
-        .resolve()
-        // Verificar se o user existe
-        .then(() => updateUserService(id, params))
-        .then(() => response.status(200).send({}))
+export function updatePassword(request, response, next) {
+    const {
+        params: {
+            user_id: userId,
+        },
+        body: userPasswords,
+    } = request;
+
+    return searchUserById(userId)
+        .then(user => {
+            if (!user) {
+                throw new PreconditionFailedException(23);
+            }
+            return user;
+        })
+        .then(user => comparePassword(userPasswords.current_password, user.password)
+            .then(comparisonResult => {
+                if (!comparisonResult) throw new PreconditionFailedException(4);
+
+                return null;
+            }))
+        .then(() => encryptPassword(userPasswords.new_password))
+        .then(hashPassword => updateUserService(userId, {}))
+        .then(([updatedUser]) => response.status(200).send(updatedUser))
         .catch(next);
 }
 

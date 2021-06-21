@@ -11,7 +11,10 @@ router.post('/authenticate', controllerAuthenticate.login);
 router.post('/signup', controllerUsers.createUser);
 
 // router.delete('/users/:id', controllerUsers.deleteUser);
-router.patch('/users/:id', controllerUsers.updateUser);
+router.patch('/users/:user_id', controllerUsers.updateUser);
+
+// Rota de atualização de senha
+router.patch('/users/password/:user_id');
 
 router.post('/markers/:type_marker_id', controllerMarkers.createMarker);
 router.delete('/markers/:id', controllerMarkers.deleteMarker);

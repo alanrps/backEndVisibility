@@ -1,24 +1,17 @@
 const knex = require('../../../database');
 
-function updateUser(id, params) {
-    const {
-        name,
-        email,
-        password,
-        genre,
-        birth_date: birthDate,
-        phone_number: phoneNumber,
-    } = params;
+function updateUser(id, params, returnData = ['id']) {
+    // const {
+    //     name,
+    //     email,
+    //     password,
+    //     genre,
+    //     birth_date: birthDate,
+    //     phone_number: phoneNumber,
+    // } = params;
 
     return new Promise((resolve, reject) => knex({ us: 'users' })
-        .update({
-            name,
-            email,
-            password,
-            genre,
-            phone_number: phoneNumber,
-            birth_date: birthDate,
-        })
+        .update(params, returnData)
         .whereNull('us.deleted_at')
         .andWhere('us.id', '=', id)
         .then(resolve)
