@@ -25,7 +25,7 @@ export function createUser(request, response, next) {
         })
         .then(() => encryptPassword(password))
         .then(hashPassword => Object.assign(params, { password: hashPassword }))
-        .then(() => createUserService(params, ['id', 'name', 'phone_number', 'email', 'genre'])) // Add birth_date
+        .then(() => createUserService(params, ['id', 'birth_date', 'name', 'phone_number', 'email', 'genre']))
         .then(([userData]) => Promise
             .resolve()
             .then(() => generateToken(userData))
