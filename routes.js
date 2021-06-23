@@ -13,11 +13,9 @@ router
 router
     .post('/signup', controllerUsers.createUser);
 
-// router.delete('/users/:id', controllerUsers.deleteUser);
 router
     .patch('/users/:user_id', controllerUsers.updateUser);
 
-// Rota de atualização de senha
 router
     .put('/users/password/:user_id', controllerUsers.updatePassword);
 
@@ -26,5 +24,7 @@ router
 
 router
     .delete('/markers/:id', controllerMarkers.deleteMarker);
+
+// router.delete('/users/:id', controllerUsers.deleteUser);
 
 module.exports = router;
