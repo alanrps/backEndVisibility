@@ -88,8 +88,10 @@ export function updatePassword(request, response, next) {
                 return null;
             }))
         .then(() => encryptPassword(userPasswords.new_password))
-        .then(hashPassword => updateUserService(userId, {}))
-        .then(([updatedUser]) => response.status(200).send(updatedUser))
+        .then(hashPassword => updateUserService(userId, {
+            password: hashPassword,
+        }))
+        .then(() => response.status(204))
         .catch(next);
 }
 

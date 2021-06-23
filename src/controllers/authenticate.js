@@ -1,7 +1,8 @@
-const comparePasswordService = require('../services/users/password/compare-password');
+import { NotFoundException } from '../exceptions/http/NotFoundException';
+import { comparePassword } from '../services/users/password/compare-password';
+
 const searchUserByEmailService = require('../services/users/search-user');
 const generateTokenService = require('../services/authenticate/token');
-const NotFoundException = require('../exceptions/http/NotFoundException');
 
 export function login(request, response, next) {
     const {
@@ -24,7 +25,7 @@ export function login(request, response, next) {
                 password: encryptPassword,
             } = user;
 
-            return comparePasswordService.comparePassword(password, encryptPassword)
+            return comparePassword(password, encryptPassword)
                 .then(comparisonResult => {
                     if (!comparisonResult) return response.status(401).send({ error: 'Password incorrect' });
 
