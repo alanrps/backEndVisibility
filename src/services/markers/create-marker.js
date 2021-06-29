@@ -1,9 +1,9 @@
 const knex = require('../../../database');
 
-function createMarker(params) {
+function createMarker(marker) {
     return new Promise((resolve, reject) => knex('markers')
-        .insert(params)
-        .then(resolve(params))
+        .insert(marker)
+        .then(resolve(marker))
         .catch(reject));
 }
 

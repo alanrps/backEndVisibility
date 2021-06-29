@@ -1,8 +1,8 @@
 exports.up = knex => knex.schema.createTable('places', table => {
     table
-        .bigIncrements('id');
+        .increments('id');
     table
-        .bigInteger('marker_id')
+        .integer('marker_id')
         .notNull();
     table
         .string('category_id', 50)

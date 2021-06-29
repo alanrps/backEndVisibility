@@ -1,9 +1,9 @@
 
 exports.up = knex => knex.schema.createTable('markers', table => {
     table
-        .bigIncrements('id');
+        .increments('id');
     table
-        .bigInteger('user_id')
+        .integer('user_id')
         .notNull();
     table
         .string('type_marker_id')
@@ -11,6 +11,12 @@ exports.up = knex => knex.schema.createTable('markers', table => {
     table
         .float('latitude')
         .notNull();
+    table
+        .integer('last_updated')
+        .defaultTo(null);
+    table
+        .boolean('denounced')
+        .defaultTo(false);
     table
         .float('longitude')
         .notNull();

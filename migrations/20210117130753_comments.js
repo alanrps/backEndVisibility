@@ -1,12 +1,12 @@
 
 exports.up = knex => knex.schema.createTable('comments', table => {
     table
-        .bigIncrements('id');
+        .increments('id');
     table
-        .bigInteger('user_id')
+        .integer('user_id')
         .notNull();
     table
-        .bigInteger('marker_id')
+        .integer('marker_id')
         .notNull();
     table
         .string('description', 100)
