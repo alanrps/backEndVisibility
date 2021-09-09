@@ -14,6 +14,7 @@ const knex = require('knex')({
     connection,
     migrations,
     seeds,
+    debug: false,
 });
 
 module.exports = knex;

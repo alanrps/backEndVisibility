@@ -6,10 +6,10 @@ exports.up = knex => knex.schema.createTable('markers', table => {
         .integer('user_id')
         .notNull();
     table
-        .string('type_marker_id')
+        .string('markers_type_id')
         .notNull();
     table
-        .float('latitude')
+        .specificType('coordinates', 'geography(POINT)')
         .notNull();
     table
         .integer('last_updated')
@@ -17,9 +17,6 @@ exports.up = knex => knex.schema.createTable('markers', table => {
     table
         .boolean('denounced')
         .defaultTo(false);
-    table
-        .float('longitude')
-        .notNull();
     table
         .dateTime('created_at')
         .notNull()
@@ -38,9 +35,9 @@ exports.up = knex => knex.schema.createTable('markers', table => {
             .references('id')
             .inTable('users');
         table
-            .foreign('type_marker_id')
+            .foreign('markers_type_id')
             .references('id')
-            .inTable('type_markers');
+            .inTable('markers_type');
     });
 
 exports.down = knex => knex.schema.dropTable('markers');

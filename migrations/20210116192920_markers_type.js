@@ -1,5 +1,5 @@
 
-exports.up = knex => knex.schema.createTable('type_markers', table => {
+exports.up = knex => knex.schema.createTable('markers_type', table => {
     table
         .string('id', 50)
         .primary()
@@ -20,4 +20,4 @@ exports.up = knex => knex.schema.createTable('type_markers', table => {
         .defaultTo(null);
 });
 
-exports.down = knex => knex.schema.dropTable('type_markers');
+exports.down = knex => knex.schema.dropTable('markers_type');

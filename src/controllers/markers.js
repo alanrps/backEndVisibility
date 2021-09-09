@@ -1,24 +1,9 @@
 // const createMarkerService = require('../services/markers/create-marker');
+const knex = require('../../database');
 const deleteMarkerService = require('../services/markers/delete-marker');
 const updateMarkerService = require('../services/markers/update-marker');
-
-export function createMarker(request, response, next) {
-    // const {
-    //     body: params,
-    //     params: type_marker_id,
-    // } = request;
-
-    // const {
-
-    // } = request.params;
-
-    // return Promise
-    //     .resolve(params)
-    //     // Verificar se o type marker existe
-    //     .then(createMarkerService)
-    //     .then(user => response.status(201).send(user))
-    //     .catch(next);
-}
+const { createMarker: createMarkerService } = require('../services/markers/create-marker');
+const { createPlace } = require('../services/places/create-place');
 
 export function deleteMarker(request, response, next) {
     const {

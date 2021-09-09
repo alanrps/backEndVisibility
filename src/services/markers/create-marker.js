@@ -1,12 +1,9 @@
-const knex = require('../../../database');
+import knex from '../../../database';
 
-function createMarker(marker) {
-    return new Promise((resolve, reject) => knex('markers')
-        .insert(marker)
-        .then(resolve(marker))
-        .catch(reject));
+export function createMarker(marker, returnData) {
+    return knex('markers')
+        .insert(marker, returnData);
 }
 
-module.exports = {
-    createMarker,
-};
+export default {};
+

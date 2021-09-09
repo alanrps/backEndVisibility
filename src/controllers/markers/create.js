@@ -1,24 +1,39 @@
+
+import knex from '../../../database';
 import { createMarker as createMarkerService } from '../../services/markers/create-marker';
 import { createPlace } from '../../services/places/create-place';
 
 export function createMarker(request, response, next) {
     const {
         body: {
-            marker: markerData,
-            type_marker: typeMarker,
+            marker,
             place = null,
+            point_data: pointData,
         },
     } = request;
 
-    return createMarkerService(markerData)
+    const point = `POINT(${pointData.longitude} ${pointData.latitude})`;
+    Object.assign(marker, {
+        coordinates: point, user_id: 1,
+    });
+
+    const markerSelect = [
+        'id',
+        'user_id',
+        'markers_type_id',
+        knex.raw('ST_AsText(coordinates)'),
+    ];
+
+    return createMarkerService(marker, markerSelect)
         .then(([createdMarker]) => {
-            if (typeMarker === 'PLACE') {
-                return createPlace(place)
+            if (place) {
+                return createPlace({ ...place, marker_id: createdMarker.id })
                     .then(() => createdMarker);
             }
+
             return createdMarker;
         })
-        .then(marker => response.status(201).send(marker))
+        .then(markerData => response.status(201).send(markerData))
         .catch(next);
 }
 
