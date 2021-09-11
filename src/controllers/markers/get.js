@@ -12,7 +12,7 @@ export function getMarkers(request, response, next) {
         'm.id',
         'm.user_id',
         'm.markers_type_id',
-        knex.raw('ST_AsText("coordinates")'),
+        knex.raw('ST_AsText("coordinates") as coordinates'),
         'm.last_updated',
         'm.denounced',
         { category_id: 'c.id' },

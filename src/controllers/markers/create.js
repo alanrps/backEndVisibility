@@ -21,8 +21,10 @@ export function createMarker(request, response, next) {
         'id',
         'user_id',
         'markers_type_id',
-        knex.raw('ST_AsText(coordinates)'),
+        knex.raw('ST_AsText(coordinates) AS coordinates'),
     ];
+
+    console.log(marker);
 
     return createMarkerService(marker, markerSelect)
         .then(([createdMarker]) => {

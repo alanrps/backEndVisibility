@@ -7,7 +7,7 @@ export function getMarkers(select, currentPosition) {
             builder.on('c.id', 'm.category_id');
             builder.onNull('c.deleted_at');
         })
-        .whereRaw(knex.raw(`ST_Distance('${currentPosition}', "coordinates") < 50`))
+        .whereRaw(knex.raw(`ST_Distance('${currentPosition}', "coordinates") < 200`))
         .whereNull('m.deleted_at');
 }
 
