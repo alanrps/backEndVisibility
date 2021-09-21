@@ -5,11 +5,10 @@ const connection = {
     user: process.env.POSTGRES_USER || 'postgres',
     database: process.env.POSTGRES_DB || 'visibility',
     password: process.env.POSTGRES_PASSWORD,
-    ssl: process.env.SSL || true,
     dialect: process.env.DIALECT || 'postgres',
     dialectOptions: {
         ssl: {
-            require: true,
+            rejectUnauthorized: false,
         },
     },
 };
