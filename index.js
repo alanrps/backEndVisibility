@@ -10,5 +10,7 @@ api.use(cors());
 api.use(routes);
 api.listen(port);
 
+console.log(process.env);
+
 // eslint-disable-next-line no-console
 console.log(`Back-end execute in ${port}`);
