@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node --exec babel-node index",
+    "start": "babel-node index",
     "start:dev": "nodemon --exec babel-node index",
     "up": "knex migrate:up",
     "down": "knex migrate:rollback",
