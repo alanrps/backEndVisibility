@@ -3,14 +3,12 @@ const { json } = require('express');
 const cors = require('cors');
 const routes = require('./routes');
 
-const port = 3000;
+const { PORT } = process.env;
 
 api.use(json());
 api.use(cors());
 api.use(routes);
-api.listen(port);
-
-console.log(process.env);
+api.listen(PORT);
 
 // eslint-disable-next-line no-console
-console.log(`Back-end execute in ${port}`);
+console.log(`Back-end execute in ${PORT}`);
