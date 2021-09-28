@@ -3,7 +3,7 @@ const controllerUsers = require('./src/controllers/users');
 const controllerMarkers = require('./src/controllers/markers');
 const controllerAuthenticate = require('./src/controllers/authenticate');
 const { createMarker } = require('./src/controllers/markers/create');
-const { getMarkers } = require('./src/controllers/markers/get');
+const { getMarkers, getPlaceMarkers } = require('./src/controllers/markers/get');
 const { schemaCreateMarker } = require('./src/validators/markers/create-marker');
 const { requestValidator } = require('./src/middlewares/request-validator');
 
@@ -18,6 +18,10 @@ app
 app
     .route('/markers')
     .post(createMarker);
+
+app
+    .route('/markers/places/:marker_id')
+    .get(getPlaceMarkers);
 
 // const authMiddleware = require('./src/middlewares/auth');
 // const auth = authMiddleware.verifyJwt;
