@@ -23,6 +23,10 @@ app
     .route('/markers/places/:marker_id')
     .get(getPlaceMarkers);
 
+app
+    .route('/users')
+    .post(controllerUsers.createUser);
+
 // const authMiddleware = require('./src/middlewares/auth');
 // const auth = authMiddleware.verifyJwt;
 // app

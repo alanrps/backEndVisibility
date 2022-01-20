@@ -1,4 +1,6 @@
 # Logs
+postgres-data
+.yarn
 logs
 *.log
 npm-debug.log*
