@@ -18,7 +18,7 @@ exports.up = knex => knex.schema.createTable('users', table => {
         .date('birth_date')
         .notNull();
     table
-        .enum('genre', ['MALE', 'FEMALE', 'OTHER'])
+        .enum('gender', ['MALE', 'FEMALE', 'OTHER'])
         .notNull();
     table
         .boolean('is_admin')

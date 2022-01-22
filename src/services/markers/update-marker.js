@@ -5,7 +5,7 @@ export function updateMarker(id, params) {
         name,
         email,
         password,
-        genre,
+        gender,
         birth_date: birthDate,
         phone_number: phoneNumber,
     } = params;
@@ -15,7 +15,7 @@ export function updateMarker(id, params) {
             name,
             email,
             password,
-            genre,
+            gender,
             birth_date: birthDate,
             phone_number: phoneNumber,
         })

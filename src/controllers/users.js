@@ -28,7 +28,7 @@ export function createUser(request, response, next) {
         })
         .then(() => encryptPassword(password))
         .then(hashPassword => Object.assign(bodySnakeCase, { password: hashPassword }))
-        .then(() => createUserService(bodySnakeCase, ['id', 'birth_date', 'name', 'phone_number', 'email', 'genre']))
+        .then(() => createUserService(bodySnakeCase, ['id', 'birth_date', 'name', 'phone_number', 'email', 'gender']))
         .then(([userData]) => Promise
             .resolve()
             .then(() => generateToken(userData))
@@ -64,7 +64,7 @@ export function updateUser(request, response, next) {
             }
             return user;
         })
-        .then(() => updateUserService(userId, userData, ['id', 'name', 'phone_number', 'email', 'birth_date', 'genre']))
+        .then(() => updateUserService(userId, userData, ['id', 'name', 'phone_number', 'email', 'birth_date', 'gender']))
         .then(([updatedUser]) => response.status(200).send(updatedUser))
         .catch(next);
 }

@@ -7,7 +7,7 @@ exports.seed = knex => knex('users').del()
             email: 'alansantana@alunos.utfpr.edu.br',
             password: '$2b$10$CDtj7KIHNXtY5oAaV6t8oe/cCsFSPrYIVp.VvO76uKReL8fNJTOa2', // masterkey
             birth_date: '1998-11-24',
-            genre: 'MALE',
+            gender: 'MALE',
             is_admin: true,
         },
     ));
