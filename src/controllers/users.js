@@ -5,16 +5,19 @@ import { generateToken } from '../services/authenticate/token';
 import PreconditionFailedException from '../exceptions/http/PreconditionFailedException';
 import { comparePassword } from '../services/users/password/compare-password';
 import { encryptPassword } from '../services/users/password/encrypt-password';
+import { convertToSnakeCase } from '../utils/convertToSnakeCase';
 
 export function createUser(request, response, next) {
     const {
-        body: params,
+        body,
     } = request;
+
+    const bodySnakeCase = convertToSnakeCase(body);
 
     const {
         email,
         password,
-    } = params;
+    } = bodySnakeCase;
 
     return searchUserByEmail(email)
         .then(user => {
@@ -24,8 +27,8 @@ export function createUser(request, response, next) {
             return user;
         })
         .then(() => encryptPassword(password))
-        .then(hashPassword => Object.assign(params, { password: hashPassword }))
-        .then(() => createUserService(params, ['id', 'birth_date', 'name', 'phone_number', 'email', 'genre']))
+        .then(hashPassword => Object.assign(bodySnakeCase, { password: hashPassword }))
+        .then(() => createUserService(bodySnakeCase, ['id', 'birth_date', 'name', 'phone_number', 'email', 'genre']))
         .then(([userData]) => Promise
             .resolve()
             .then(() => generateToken(userData))

@@ -25,7 +25,8 @@
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.14",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "snake-case": "^3.0.4"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.14.5",
