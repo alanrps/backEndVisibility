@@ -1,6 +1,6 @@
 const sendGridMail = require('@sendgrid/mail');
 const { emailTemplate } = require('../templates/email');
-sendGridMail.setApiKey("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");
+sendGridMail.setApiKey(process.env.EMAIL_API_KEY); 
 
 function getMessage(email, newPassword) {
   return {
