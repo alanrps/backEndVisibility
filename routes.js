@@ -7,7 +7,6 @@ const { getMarkers, getPlaceMarkers } = require('./src/controllers/markers/get')
 const { schemaCreateMarker } = require('./src/validators/markers/create-marker');
 const { requestValidator } = require('./src/middlewares/request-validator');
 
-
 app
     .post('/authenticate', controllerAuthenticate.login);
 
@@ -27,15 +26,23 @@ app
     .route('/users')
     .post(controllerUsers.createUser);
 
+app
+    .route('/users/:email')
+    .patch(controllerUsers.recoveryPassword);
+
+app
+    .route('/users/:user_id')
+    .patch(controllerUsers.updateUser);
+
+app
+    .route('/users/passwords/:user_id')
+    .patch(controllerUsers.updatePassword);
+
+
 // const authMiddleware = require('./src/middlewares/auth');
 // const auth = authMiddleware.verifyJwt;
 // app
 //     .delete('/markers/:id', controllerMarkers.deleteMarker);
-// app
-//     .patch('/users/:user_id', controllerUsers.updateUser);
-
-// app
-//     .put('/users/password/:user_id', controllerUsers.updatePassword);
 
 // app
 //     .route('/markers/:type_marker_id')
@@ -43,7 +50,6 @@ app
 //         requestValidator(schemaCreateMarker),
 //         controllerMarkers.createMarker,
 //     ]);
-
 
 // app.delete('/users/:id', controllerUsers.deleteUser);
 
