@@ -59,6 +59,8 @@ export function updateUser(request, response, next) {
         body: userData,
     } = request;
 
+    const userDataSnakeCase = convertToSnakeCase(userData);
+
     return searchUserById(userId)
         .then(([user]) => {
             if (!user) {
@@ -66,7 +68,7 @@ export function updateUser(request, response, next) {
             }
             return user;
         })
-        .then(() => updateUserById(userId, userData, ['id', 'name', 'phone_number', 'email', 'birth_date', 'gender']))
+        .then(() => updateUserById(userId, userDataSnakeCase, ['id', 'name', 'phone_number', 'email', 'birth_date', 'gender']))
         .then(([updatedUser]) => response.status(200).send(updatedUser))
         .catch(next);
 }
@@ -76,7 +78,10 @@ export function updatePassword(request, response, next) {
         params: {
             user_id: userId,
         },
-        body: userPasswords,
+        body: {
+            currentPassword: current_password,
+            newPassword: new_password,
+        },
     } = request;
 
     return searchUserById(userId)
@@ -88,14 +93,14 @@ export function updatePassword(request, response, next) {
             return user;
         })
         .then(user => {
-            return comparePassword(userPasswords.current_password, user.password)
+            return comparePassword(current_password, user.password)
                 .then(comparisonResult => {
                     if (!comparisonResult) throw new PreconditionFailedException(4);
 
                     return comparisonResult;
                 });
         })
-        .then(() => encryptPassword(userPasswords.new_password))
+        .then(() => encryptPassword(new_password))
         .then(hashPassword => updateUserById(userId, {
             password: hashPassword,
         }))
