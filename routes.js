@@ -27,16 +27,20 @@ app
     .post(controllerUsers.createUser);
 
 app
+    .route('/users/:id(\\d+)')
+    .patch(controllerUsers.updateUser);
+
+app
     .route('/users/:email')
     .patch(controllerUsers.recoveryPassword);
 
 app
-    .route('/users/:user_id')
-    .patch(controllerUsers.updateUser);
-
-app
     .route('/users/passwords/:user_id')
     .patch(controllerUsers.updatePassword);
+
+app
+    .route('/users/:id')
+    .get(controllerUsers.searchUserById);
 
 
 // const authMiddleware = require('./src/middlewares/auth');
