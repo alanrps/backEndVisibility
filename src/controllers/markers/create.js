@@ -13,8 +13,9 @@ export function createMarker(request, response, next) {
     } = request;
 
     const point = `POINT(${pointData.longitude} ${pointData.latitude})`;
+
     Object.assign(marker, {
-        coordinates: point, user_id: 3,
+        coordinates: point
     });
 
     const markerSelect = [
