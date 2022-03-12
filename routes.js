@@ -6,6 +6,7 @@ const { createMarker } = require('./src/controllers/markers/create');
 const { getMarkers, getPlaceMarkers } = require('./src/controllers/markers/get');
 const { schemaCreateMarker } = require('./src/validators/markers/create-marker');
 const { requestValidator } = require('./src/middlewares/request-validator');
+const controllerRanking = require('./src/controllers/ranking');
 
 app
     .post('/authenticate', controllerAuthenticate.login);
@@ -41,6 +42,10 @@ app
 app
     .route('/users/:id')
     .get(controllerUsers.searchUserById);
+
+app
+    .route('/ranking')
+    .get(controllerRanking.createRanking);
 
 
 // const authMiddleware = require('./src/middlewares/auth');
