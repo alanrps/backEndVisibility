@@ -8,20 +8,6 @@ const { schemaCreateMarker } = require('./src/validators/markers/create-marker')
 const { verifyJwt } = require('./src/middlewares/auth');
 const controllerRanking = require('./src/controllers/ranking');
 
-// ENDPOINTS SEM AUTENTICAÇÃO
-app 
-    .post('/authenticate', controllerAuthenticate.login);
-app
-    .get('/markers/:current_position', getMarkers);
-app
-    .post('/users', controllerUsers.createUser);
-app
-    .patch('/users/:email', controllerUsers.recoveryPassword);
-app
-    .get('/ranking', controllerRanking.createRanking);
-app
-    .get('/markers/places/:marker_id', getPlaceMarkers);
-
 // ENDPOINTS COM AUTENTICAÇÃO
 app
     .post('/markers', [
@@ -44,6 +30,19 @@ app
         controllerUsers.searchUserById
     ]);
 
+// ENDPOINTS SEM AUTENTICAÇÃO
+app 
+    .post('/authenticate', controllerAuthenticate.login);
+app
+    .get('/markers/:current_position', getMarkers);
+app
+    .post('/users', controllerUsers.createUser);
+app
+    .patch('/users/:email', controllerUsers.recoveryPassword);
+app
+    .get('/ranking', controllerRanking.createRanking);
+app
+    .get('/markers/places/:marker_id', getPlaceMarkers);
 // app
 //     .delete('/markers/:id', controllerMarkers.deleteMarker);
 
