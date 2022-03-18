@@ -6,7 +6,8 @@ const {
 
 export function verifyJwt(request, response, next) {
     return new Promise((resolve, reject) => {
-        const headerToken = request.headers['x-acess-token'];
+        const headerToken = request.headers['authorization'];
+
         if (!headerToken) return response.status(401).send({ auth: false, message: 'No token provided' });
 
         const parts = headerToken.split(' ');
@@ -20,7 +21,7 @@ export function verifyJwt(request, response, next) {
         return jwt.verify(token, SECRET, (err, decoded) => {
             if (err) return response.status(401).send({ auth: false, message: 'Token invalid' });
 
-            return resolve(decoded);
+            return next(resolve(decoded));
         });
     });
 }

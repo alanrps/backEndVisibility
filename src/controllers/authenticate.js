@@ -10,7 +10,7 @@ export function login(request, response, next) {
         password,
     } = request.body;
 
-    Promise
+    return Promise
         .resolve()
         .then(() => searchUserByEmailService.searchUserByEmail(email, ['id', 'phone_number', 'email', 'password']))
         .then(([user]) => {

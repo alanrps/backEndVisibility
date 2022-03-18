@@ -5,51 +5,45 @@ const controllerAuthenticate = require('./src/controllers/authenticate');
 const { createMarker } = require('./src/controllers/markers/create');
 const { getMarkers, getPlaceMarkers } = require('./src/controllers/markers/get');
 const { schemaCreateMarker } = require('./src/validators/markers/create-marker');
-const { requestValidator } = require('./src/middlewares/request-validator');
+const { verifyJwt } = require('./src/middlewares/auth');
 const controllerRanking = require('./src/controllers/ranking');
 
-app
+// ENDPOINTS SEM AUTENTICAÇÃO
+app 
     .post('/authenticate', controllerAuthenticate.login);
-
 app
-    .route('/markers/:current_position')
-    .get(getMarkers);
-
+    .get('/markers/:current_position', getMarkers);
 app
-    .route('/markers')
-    .post(createMarker);
-
+    .post('/users', controllerUsers.createUser);
 app
-    .route('/markers/places/:marker_id')
-    .get(getPlaceMarkers);
-
+    .patch('/users/:email', controllerUsers.recoveryPassword);
 app
-    .route('/users')
-    .post(controllerUsers.createUser);
-
+    .get('/ranking', controllerRanking.createRanking);
 app
-    .route('/users/:id(\\d+)')
-    .patch(controllerUsers.updateUser);
+    .get('/markers/places/:marker_id', getPlaceMarkers);
 
+// ENDPOINTS COM AUTENTICAÇÃO
 app
-    .route('/users/:email')
-    .patch(controllerUsers.recoveryPassword);
-
+    .post('/markers', [
+        verifyJwt,
+        createMarker
+    ]);
 app
-    .route('/users/passwords/:user_id')
-    .patch(controllerUsers.updatePassword);
-
+    .patch('/users/:id(\\d+)', [
+        verifyJwt,
+        controllerUsers.updateUser
+    ]);
 app
-    .route('/users/:id')
-    .get(controllerUsers.searchUserById);
-
+    .patch('/users/passwords/:user_id', [
+        verifyJwt,
+        controllerUsers.updatePassword
+    ]);
 app
-    .route('/ranking')
-    .get(controllerRanking.createRanking);
+    .get('/users/:id', [
+        verifyJwt,
+        controllerUsers.searchUserById
+    ]);
 
-
-// const authMiddleware = require('./src/middlewares/auth');
-// const auth = authMiddleware.verifyJwt;
 // app
 //     .delete('/markers/:id', controllerMarkers.deleteMarker);
 

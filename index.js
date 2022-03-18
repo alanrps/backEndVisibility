@@ -1,3 +1,4 @@
+require('dotenv').config();
 const api = require('express')();
 const { json } = require('express');
 const cors = require('cors');

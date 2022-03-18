@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const connection = {
     host: process.env.POSTGRES_HOST || 'localhost',
     user: process.env.POSTGRES_USER || 'postgres',
