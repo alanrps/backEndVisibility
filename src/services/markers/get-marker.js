@@ -22,5 +22,11 @@ export function getPlaceMarker(select, markerId) {
         .whereNull('m.deleted_at');
 }
 
+export function getMarkerById(select, markerId) {
+    return knex({ m: 'markers' })
+        .select(select)
+        .where('m.id', markerId)
+        .whereNull('m.deleted_at');
+}
 
 export default {};

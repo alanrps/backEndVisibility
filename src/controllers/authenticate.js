@@ -12,7 +12,7 @@ export function login(request, response, next) {
 
     return Promise
         .resolve()
-        .then(() => searchUserByEmailService.searchUserByEmail(email, ['id', 'phone_number', 'email', 'password']))
+        .then(() => searchUserByEmailService.searchUserByEmail(email, ['id', 'name', 'phone_number', 'email', 'password']))
         .then(([user]) => {
             if (!user) {
                 throw new NotFoundException(23);

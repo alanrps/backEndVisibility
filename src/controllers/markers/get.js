@@ -1,6 +1,18 @@
 import knex from '../../../database';
 import { getMarkers as getMarkersService, getPlaceMarker } from '../../services/markers/get-marker';
 
+// export function getMarkerById(request, response, next) {
+//     const {
+//         id: markerId,
+//     } = request.params;
+
+//     const select = ['m.id'];
+
+//     return getMarkersService(select, currentPosition)
+//         .then(markers => response.status(200).send(markers))
+//         .catch(next);
+// }
+
 export function getMarkers(request, response, next) {
     const {
         params: {
@@ -32,11 +44,12 @@ export function getPlaceMarkers(request, response, next) {
 
     const select = [
         'p.id',
-        'p.marker_id',
         'p.name',
         'p.classify',
-        'p.space_type',
         'p.description',
+        { spaceType: 'p.space_type' },
+        { categoryId: 'm.category_id' },
+        { markerId: 'p.marker_id' },
     ];
 
     return getPlaceMarker(select, markerId)

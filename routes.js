@@ -1,12 +1,16 @@
 const app = require('express')();
 const controllerUsers = require('./src/controllers/users');
-const controllerMarkers = require('./src/controllers/markers');
 const controllerAuthenticate = require('./src/controllers/authenticate');
 const { createMarker } = require('./src/controllers/markers/create');
+const { updateMarker } = require('./src/controllers/markers/update');
 const { getMarkers, getPlaceMarkers } = require('./src/controllers/markers/get');
 const { schemaCreateMarker } = require('./src/validators/markers/create-marker');
 const { verifyJwt } = require('./src/middlewares/auth');
 const controllerRanking = require('./src/controllers/ranking');
+const { searchAchievementsByUserId } = require('./src/controllers/achievements');
+const { createRanking } = require('./src/controllers/ranking');
+const { insertComments, searchComments } = require('./src/controllers/comments');
+const { searchInformationAmountByUser, updateInformationAmountByUser } = require('./src/controllers/informations-amount');
 
 // ENDPOINTS COM AUTENTICAÇÃO
 app
@@ -14,6 +18,13 @@ app
         verifyJwt,
         createMarker
     ]);
+
+app
+    .patch('/markers/:id', [
+        verifyJwt,
+        updateMarker
+    ]);
+
 app
     .patch('/users/:id(\\d+)', [
         verifyJwt,
@@ -29,6 +40,40 @@ app
         verifyJwt,
         controllerUsers.searchUserById
     ]);
+app
+    .get('/ranking', [
+        // verifyJwt,
+        createRanking
+    ]);
+app
+    .get('/users/:id/achievements', [
+        // verifyJwt,
+        searchAchievementsByUserId
+    ]);
+
+app
+    .get('/users/:id/informationAmount', [
+        // verifyJwt,
+        searchInformationAmountByUser
+    ]);
+
+app
+    .patch('/users/:id/informationAmount', [
+        // verifyJwt,
+        updateInformationAmountByUser
+    ]);
+
+app
+    .get('/markers/:id/comments', [
+        // verifyJwt,
+        searchComments,
+    ]);
+app
+    .post('/markers/comments', [
+        // verifyJwt,
+        insertComments,
+    ]);
+
 
 // ENDPOINTS SEM AUTENTICAÇÃO
 app 
