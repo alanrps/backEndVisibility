@@ -3,7 +3,7 @@ exports.up = knex => knex.schema.createTable('levels', table => {
     table
         .increments('id');
     table
-        .increments('description')
+        .string('description')
         .notNull();
     table
         .integer('points')

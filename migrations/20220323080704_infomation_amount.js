@@ -1,9 +1,7 @@
 
 exports.up = knex => knex.schema.createTable('information_amount', table => {
     table
-        .increments('id')
-        .primary()
-        .notNull();
+        .increments('id');
     table 
         .integer('user_id')
         .notNull();
