@@ -1,9 +1,7 @@
 
 exports.up = knex => knex.schema.createTable('levels', table => {
     table
-        .increments('id')
-        .primary()
-        .notNull();
+        .increments('id');
     table
         .increments('description')
         .notNull();
