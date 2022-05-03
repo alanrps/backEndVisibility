@@ -16,13 +16,13 @@ import knex from '../../../database';
 
 export function generateRanking(){
     return knex
-        .select(['name', 'points', 'level'])
+        .select(['name', 'weekly_points', 'level'])
         .from({ u: 'users' })
         .innerJoin(({ ia: 'information_amount' }), builder => {
             builder.on('ia.user_id', 'u.id');
             builder.andOnNull('u.deleted_at');
         })
-        .orderBy('points', 'DESC')
+        .orderBy('weekly_points', 'DESC')
         .limit(50) 
         .whereNull('u.deleted_at');
 }

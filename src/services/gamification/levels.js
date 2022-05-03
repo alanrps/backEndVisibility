@@ -1,9 +1,14 @@
 import knex from '../../../database';
 
-export function searchCurrentLevelData(level, select = ['*']){
-    return knex
+export function searchCurrentLevelData(select = ['*'], level){
+    const query = knex
         .select(select)
         .from({ l: 'levels' })
-        .where('l.id', level)
         .whereNull('l.deleted_at');
+
+    if(level)
+        query
+            .where('l.id', level);
+
+    return query;
 }

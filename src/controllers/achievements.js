@@ -3,11 +3,17 @@ import { searchUserById as searchUserByIdService } from '../services/users/searc
 import NotFoundException from '../exceptions/http/NotFoundException';
 import { searchAchievements } from '../services/gamification/achievements';
 import { searchAmountInformation } from '../services/gamification/information-amount';
+import InternalServerError from '../exceptions/http/InternalServerError';
 
 export function searchAchievementsByUserId(request, response, next){
     const {
-        id: userId 
-    } = request.params;
+        params: {
+            id: userId = null,
+        },
+        query: {
+            filter,
+        },
+    } = request;
 
     const selectInformationAmount = [
         'evaluations',
@@ -45,23 +51,31 @@ export function searchAchievementsByUserId(request, response, next){
                 searchAmountInformation(userId, selectInformationAmount)
             ])
             .then(([userAchivements, [amountInformation]]) => {
-                return userAchivements.map(userAchivement => {
+                return userAchivements.reduce((acc, userAchivement) => {
                     const {
                         category,
                         acquired,
                         actionsAmount,
                     } = userAchivement;
 
+                    if(filter === 'notAcquired' && acquired)
+                        return acc;
+
+                    else if(filter === 'acquired' && !acquired)
+                        return acc;
+
                     if(category){
                         const amount = acquired ? actionsAmount : amountInformation[category];
                         userAchivement['amount'] = amount;
                     }
-                    // Se não tiver categoria?
+                    else {
+                        throw new InternalServerError(50);
+                    }
 
-                    return userAchivement;
-                })
+                    acc.push(userAchivement);
+                    return acc;
+                }, []);
             })
-
         })
         .then((achievements) => response.status(200).send(achievements))
         .catch(next);

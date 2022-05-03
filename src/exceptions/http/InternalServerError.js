@@ -1,9 +1,9 @@
 const HttpException = require('./HttpException');
 
-module.exports = class ForbiddenException extends HttpException {
+module.exports = class InternalServerError extends HttpException {
 
     constructor(errorCode, report) {
-        super(403, errorCode);
+        super(500, errorCode);
         this.report = report;
     }
 };

@@ -18,7 +18,14 @@ export function getMarkers(request, response, next) {
         params: {
             current_position: currentPosition,
         },
+        query: {
+            categories = null,
+            acessibilities = null
+        },
     } = request;
+
+    console.log(categories);
+    console.log(acessibilities);
 
     const select = [
         'm.id',
@@ -27,10 +34,18 @@ export function getMarkers(request, response, next) {
         knex.raw('ST_AsText("coordinates") as coordinates'),
         'm.last_updated',
         'm.denounced',
-        { category_id: 'c.id' },
+        { category_id: 'm.category_id' },
     ];
 
-    return getMarkersService(select, currentPosition)
+    let filter = {};
+    if(categories)
+        filter.categories = JSON.parse(categories);
+    if(acessibilities)
+        filter.acessibilities = JSON.parse(acessibilities);
+
+    console.log(filter);
+    
+    return getMarkersService(select, currentPosition, filter)
         .then(markers => response.status(200).send(markers))
         .catch(next);
 }

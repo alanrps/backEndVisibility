@@ -8,9 +8,6 @@ exports.up = knex => knex.schema.createTable('user_achievement', table => {
     table
         .boolean('acquired')
         .defaultTo(false);
-    // table
-    //     .integer('current_amount')
-    //     .defaultTo(0);
     table
         .primary(['user_id', 'achievement_id']);
 })

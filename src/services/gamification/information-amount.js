@@ -4,6 +4,10 @@ export function searchAmountInformation(userId, select = ['*']){
     return knex
         .select(select)
         .from({ ia: 'information_amount' })
+        .innerJoin({ l: 'levels' }, builder => {
+            builder.on('ia.level', 'l.id');
+            builder.onNull('l.deleted_at');
+        })
         .where('ia.user_id', userId)
         .whereNull('ia.deleted_at');
 }

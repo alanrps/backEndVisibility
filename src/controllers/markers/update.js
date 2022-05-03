@@ -12,7 +12,9 @@ export function updateMarker(request, response, next) {
     } = request;
 
     console.log(id);
+    console.log(body);
 
+    const marker_id = parseInt(id);
     const bodySnakeCase = convertToSnakeCase(body);
 
     const {
@@ -25,8 +27,8 @@ export function updateMarker(request, response, next) {
         
     const select = ['id'];
 
-    return updateMarkerService(id, { category_id }, select)
-        .then(() => updatePlace(id, { name, description, space_type, classify }), select)
+    return updateMarkerService(marker_id, { category_id }, select)
+        .then(() => updatePlace(marker_id, { name, description, space_type, classify }), select)
         .then(() => response.status(204).send({}))
         .catch(next);
 }

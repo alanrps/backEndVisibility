@@ -11,10 +11,16 @@ exports.up = knex => knex.schema.createTable('information_amount', table => {
         .integer('points')
         .default(0);
     table
+        .integer('weekly_points')
+        .default(0);
+    table
         .integer('level')
         .default(0);
     table
         .integer('evaluations')
+        .defaultTo(0);
+    table
+        .integer('edit_evaluations')
         .defaultTo(0);
     table
         .integer('public_evaluations')
@@ -66,6 +72,9 @@ exports.up = knex => knex.schema.createTable('information_amount', table => {
         .defaultTo(0);
     table
         .integer('finance')
+        .defaultTo(0);
+    table
+        .integer('comments')
         .defaultTo(0);
     table
         .dateTime('created_at')
