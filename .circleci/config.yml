@@ -3,12 +3,3 @@ version: 2.1
 
 orbs:
   node: circleci/node@4.7.0
-
-workflows:
-  sample:
-    jobs:
-      - node/test:
-          version: '16'
-          # This is the node version to use for the `cimg/node` tag
-          # Relevant tags can be found on the CircleCI Developer Hub
-          # https://circleci.com/developer/images/image/cimg/node
