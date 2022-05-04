@@ -13,6 +13,10 @@ const { insertComments, searchComments } = require('./src/controllers/comments')
 const { searchInformationAmountByUser, updateInformationAmountByUser } = require('./src/controllers/informations-amount');
 
 // ENDPOINTS COM AUTENTICAÇÃO
+
+app
+    .get('/', (req, res, next) => res.send({ server: true }));
+
 app
     .post('/markers', [
         verifyJwt,
