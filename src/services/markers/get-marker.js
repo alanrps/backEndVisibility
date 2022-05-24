@@ -1,6 +1,6 @@
 import knex from '../../../database';
 
-export function getMarkers(select, currentPosition, filter = {}) {
+export function getMarkers(select, currentPosition, filter) {
     console.log(filter);
 
     const subqueryPlaces = knex({ m: 'markers' })
@@ -13,15 +13,20 @@ export function getMarkers(select, currentPosition, filter = {}) {
         .whereRaw(knex.raw(`ST_Distance('${currentPosition}', "coordinates") < 500`))
         .whereNull('m.deleted_at');
     
-    if(filter.acessibilities)
+    if(filter.acessibilities.length){
+        console.info('FILTRO ACESSIBILIDADE');
         subqueryPlaces
             .whereIn('p.classify', filter.acessibilities);
+    }
 
-    if(filter.categories)
+    if(filter.categories.length){
+        console.info('FILTRO CATEGORIA');
         subqueryPlaces   
             .whereIn('m.category_id', filter.categories);
-    
-    const subqueryParking = knex({ m: 'markers' }).select('m.id')
+    }
+
+    const subqueryParking = knex({ m: 'markers' })
+        .select('m.id')
         .where('m.markers_type_id', 'WHEELCHAIR_PARKING')
         .whereRaw(knex.raw(`ST_Distance('${currentPosition}', "coordinates") < 500`))
         .whereNull('m.deleted_at');

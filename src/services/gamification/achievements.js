@@ -8,7 +8,8 @@ export function searchAchievements(userId, filter){
             builder.on('ua.achievement_id', 'a.id');
             builder.andOn('ua.user_id', knex.raw('?', [userId]));
         })
-        .whereNull('a.deleted_at');
+        .whereNull('a.deleted_at')
+        .orderBy('ua.acquired', 'DESC');
 
     if(filter === 'acquired')
         query

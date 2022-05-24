@@ -36,7 +36,7 @@ export function searchInformationAmountByUser(request, response, next){
         'education',
         'food',
         'hospital',
-        'accomodation',
+        'accommodation',
         'finance'
     ];
 
@@ -86,7 +86,7 @@ export function updateInformationAmountByUser(request, response, next){
             return user;
         })
         .then(() => Promise.all([
-            searchAmountInformation(id, [ ...updatedProperties, 'level', 'points', 'weekly_points' ]),
+            searchAmountInformation(id, [ ...updatedProperties, 'level', 'ia.points', 'weekly_points' ]),
             searchCurrentLevelData(['id', 'points']),
             searchAction(['id', 'points']),
             searchAchievements(id, 'notAcquired')

@@ -14,7 +14,7 @@ exports.seed = function(knex) {
         {description: "Contribuidor Diamante 1", points: 5000},
         {description: "Contribuidor Diamante 2 ", points: 15000},
         {description: "Contribuidor Diamante 3", points: 50000},
-        {description: "Contribuidor Mestre", points: 10000},
+        {description: "Contribuidor Mestre", points: 100000},
       ]);
     });
 };

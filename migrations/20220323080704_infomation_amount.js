@@ -13,7 +13,7 @@ exports.up = knex => knex.schema.createTable('information_amount', table => {
         .default(0);
     table
         .integer('level')
-        .default(0);
+        .default(1);
     table
         .integer('evaluations')
         .defaultTo(0);
@@ -66,7 +66,7 @@ exports.up = knex => knex.schema.createTable('information_amount', table => {
         .integer('hospital')
         .defaultTo(0);
     table
-        .integer('accomodation')
+        .integer('accommodation')
         .defaultTo(0);
     table
         .integer('finance')

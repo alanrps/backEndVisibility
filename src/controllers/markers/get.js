@@ -22,6 +22,7 @@ export function getMarkers(request, response, next) {
             categories = null,
             acessibilities = null
         },
+        filter = {},
     } = request;
 
     console.log(categories);
@@ -37,11 +38,8 @@ export function getMarkers(request, response, next) {
         { category_id: 'm.category_id' },
     ];
 
-    let filter = {};
-    if(categories)
-        filter.categories = JSON.parse(categories);
-    if(acessibilities)
-        filter.acessibilities = JSON.parse(acessibilities);
+    filter.categories = categories ? JSON.parse(categories) : [];
+    filter.acessibilities = acessibilities ? JSON.parse(acessibilities) : [];
 
     console.log(filter);
     

@@ -15,23 +15,23 @@ export function searchAchievementsByUserId(request, response, next){
         },
     } = request;
 
-    const selectInformationAmount = [
-        'evaluations',
-        'public_evaluations',
-        'private_evaluations',
-        'place',
-        'wheelchair_parking',
-        'travel',
-        'transport',
-        'supermarket',
-        'services',
-        'leisure',
-        'education',
-        'food',
-        'hospital',
-        'accomodation',
-        'finance'
-    ];
+    // const selectInformationAmount = [
+    //     'evaluations',
+    //     'public_evaluations',
+    //     'private_evaluations',
+    //     'place',
+    //     'wheelchair_parking',
+    //     'travel',
+    //     'transport',
+    //     'supermarket',
+    //     'services',
+    //     'leisure',
+    //     'education',
+    //     'food',
+    //     'hospital',
+    //     'accommodation',
+    //     'finance'
+    // ];
 
     if(!userId){
         return new BadRequest(20);
@@ -48,7 +48,7 @@ export function searchAchievementsByUserId(request, response, next){
         .then(() => {
             return Promise.all([
                 searchAchievements(userId),
-                searchAmountInformation(userId, selectInformationAmount)
+                searchAmountInformation(userId) // selectInformationAmount
             ])
             .then(([userAchivements, [amountInformation]]) => {
                 return userAchivements.reduce((acc, userAchivement) => {

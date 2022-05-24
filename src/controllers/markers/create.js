@@ -22,6 +22,9 @@ export function createMarker(request, response, next) {
         'id',
         'user_id',
         'markers_type_id',
+        'denounced',
+        'last_updated',
+        'category_id',
         knex.raw('ST_AsText(coordinates) AS coordinates'),
     ];
 

@@ -17,7 +17,7 @@ exports.up = knex => knex.schema.createTable('places', table => {
         .enu('space_type', ['PRIVATE', 'PUBLIC'])
         .notNull();
     table
-        .string('description', 100)
+        .string('description', 300)
         .defaultTo(null);
     table
         .dateTime('created_at')
