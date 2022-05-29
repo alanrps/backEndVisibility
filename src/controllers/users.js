@@ -4,6 +4,7 @@ import BadRequest from '../exceptions/http/BadRequest';
 import { generateToken } from '../services/authenticate/token';
 import { updateUserById } from '../services/users/update-user';
 import { searchUserByEmail, searchUserById as searchUserByIdService } from '../services/users/search-user';
+import { createInformationAmountByUser } from '../services/gamification/information-amount';
 import { createUser as createUserService } from '../services/users/create-user';
 import PreconditionFailedException from '../exceptions/http/PreconditionFailedException';
 import NotFoundException from '../exceptions/http/NotFoundException';
@@ -57,8 +58,7 @@ export function createUser(request, response, next) {
         .then(() => encryptPassword(password))
         .then(hashPassword => Object.assign(bodySnakeCase, { password: hashPassword }))
         .then(() => createUserService(bodySnakeCase, ['id', 'birth_date', 'name', 'phone_number', 'email', 'gender']))
-        .then(([userData]) => Promise
-            .resolve()
+        .then(([userData]) => createInformationAmountByUser({ user_id: userData.id }) 
             .then(() => generateToken(userData))
             .then(token => Object.assign(userData, { token })))
         .then(userAndToken => response.status(201).send(userAndToken))

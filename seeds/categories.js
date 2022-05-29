@@ -8,7 +8,7 @@ exports.seed = knex => knex('categories').del()
         { id: 'LEISURE', description: 'Categoria de lazer' },
         { id: 'EDUCATION', description: 'Categoria de educação' },
         { id: 'FOOD', description: 'Categoria de alimentos' },
-        { id: 'HOSPITALS', description: 'Categoria de hospitais e clínicas' },
+        { id: 'HOSPITAL', description: 'Categoria de hospitais e clínicas' },
         { id: 'ACCOMMODATION', description: 'Categoria de hospedagem' },
         { id: 'FINANCE', description: 'Categoria de financias' },
     ]));
