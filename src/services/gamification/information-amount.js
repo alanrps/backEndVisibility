@@ -18,3 +18,10 @@ export function updateAmountInformation(userId, informationAmount = {}){
         .where('ia.user_id', userId)
         .whereNull('ia.deleted_at');
 }
+
+export function createInformationAmountByUser(params, returnData = ['id']) {
+    return new Promise((resolve, reject) => knex('information_amount')
+        .insert(params, returnData)
+        .then(resolve)
+        .catch(reject));
+}
