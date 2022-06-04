@@ -15,7 +15,7 @@ exports.up = knex => knex.schema.createTable('information_amount', table => {
         .integer('level')
         .default(1);
     table
-        .integer('evaluations')
+        .integer('marking')
         .defaultTo(0);
     table
         .integer('edit_evaluations')

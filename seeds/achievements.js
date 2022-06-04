@@ -143,11 +143,11 @@ exports.seed = function(knex) {
       ];
 
       const actions = [
-        {id: 'AE1', description: 'Adicione 1 avaliação', category: 'evaluations', actions_amount: 1},
-        {id: 'AE5', description: 'Adicione 5 avaliações', category: 'evaluations', actions_amount: 5},
-        // {id: 'AE25', description: 'Adicione 1 local', category: 'evaluations'},
-        // {id: 'AE50', description: 'Adicione 1 local', category: 'evaluations'},
-        // {id: 'AE100', description: 'Adicione 1 local', category: 'evaluations'},
+        {id: 'AA1', description: 'Adicione 1 marcação', category: 'marking', actions_amount: 1},
+        {id: 'AA5', description: 'Adicione 5 marcações', category: 'marking', actions_amount: 5},
+        // {id: 'AE25', description: 'Adicione 1 local', category: 'marking'},
+        // {id: 'AE50', description: 'Adicione 1 local', category: 'marking'},
+        // {id: 'AE100', description: 'Adicione 1 local', category: 'marking'},
 
         {id: 'AEE1', description: 'Atualize 1 avaliação de local', category: 'edit_evaluations', actions_amount: 1},
         {id: 'AEE5', description: 'Atualize 5 avaliações de local', category: 'edit_evaluations', actions_amount: 5},

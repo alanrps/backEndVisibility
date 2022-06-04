@@ -26,7 +26,7 @@ export function searchInformationAmountByUser(request, response, next){
         { notAccessiblePlace: 'not_accessible_place'},
         { partiallyAccessiblePlace: 'partially_accessible_place'},
         'level',
-        'evaluations',
+        'marking',
         'place',
         'travel',
         'transport',
