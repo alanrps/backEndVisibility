@@ -1,4 +1,5 @@
 const knexConfig = require('./knexfile'); // Problema com o import, verificar babel
+const { attachPaginate } = require('knex-paginate');
 
 const env = process.env.ENVIRONMENT || 'development';
 
@@ -8,6 +9,8 @@ const {
     migrations,
     seeds,
 } = knexConfig[env];
+
+attachPaginate();
 
 const knex = require('knex')({
     client,

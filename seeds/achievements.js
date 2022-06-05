@@ -3,8 +3,8 @@ exports.seed = function(knex) {
   return knex('achievements').del()
     .then(() => {
       const types_evaluations = [
-        {id: 'AP5', description: 'Adicione 5 locais', category: 'place', actions_amount: 5},
-        {id: 'AP25', description: 'Adicione 25 locais', category: 'place', actions_amount: 25},
+        {id: 'AP5', description: 'Adicione 5 avaliações de locais', category: 'place', actions_amount: 5},
+        {id: 'AP25', description: 'Adicione 25 avaliações de locais', category: 'place', actions_amount: 25},
         // {id: 'AP25', description: 'Adicione 50 locais', category: 'place'},
         // {id: 'AP50', description: 'Adicione 75 locais', category: 'place'},
         // {id: 'AP100', description: 'Adicione 100 locais', category: 'place'},

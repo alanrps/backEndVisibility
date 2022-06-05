@@ -14,7 +14,7 @@ import knex from '../../../database';
 //         .whereNull('m.deleted_at');
 // }
 
-export function generateRanking(){
+export function generateRanking(page){
     return knex
         .select(['name', 'weekly_points', 'level'])
         .from({ u: 'users' })
@@ -22,7 +22,10 @@ export function generateRanking(){
             builder.on('ia.user_id', 'u.id');
             builder.andOnNull('u.deleted_at');
         })
-        .orderBy('weekly_points', 'DESC')
-        .limit(50) 
-        .whereNull('u.deleted_at');
+        .orderBy('weekly_points', 'DESC') 
+        .whereNull('u.deleted_at')
+        .paginate({
+            perPage: 10,
+            currentPage: page
+        });
 }
