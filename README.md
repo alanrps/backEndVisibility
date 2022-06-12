@@ -2,7 +2,24 @@
 
 ## Objetivo
 
-Desenvolver uma **API REST** que forneça informações para uma aplicação **Android**. A aplicação tem o intuíto de por meio de um sistema de mapas, realizar a classificação de locais de acordo com as suas características de acessibilidade e identificação de vagas para deficientes. O aplicativo ainda contará com um sistema de gamificação que será responsável por recompensar usuários, mediante a atribuição de pontos e a utilização de um ranking de contribuidores.
+**API REST** que fornece informações para uma aplicação **Android**. A aplicação tem o intuíto de por meio de um sistema de mapas, realizar a classificação de locais de acordo com as suas características de acessibilidade e identificação de vagas para deficientes. O aplicativo ainda conta com um sistema de gamificação com o recurso de pontos, níveis, placar de líderes e conquistas.
+
+## Execução do projeto
+
+- Preencher o .env com base no .env.example
+- Executar comandos abaixo
+
+### Instalação de dependências
+$ npm install 
+
+### Criação das tabelas
+$ npm migrate
+
+### Adição dos dados base
+$ npm seed
+
+### Executar a api
+$ npm run
 
 ## Público Alvo
 
