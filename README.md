@@ -19,7 +19,7 @@ $ npm migrate
 $ npm seed
 
 ### Executar a api
-$ npm run
+$ npm start
 
 ## Público Alvo
 
