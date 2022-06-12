@@ -23,7 +23,7 @@
     "express": "^4.17.1",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^2.1.0",
+    "knex": "^0.21.14",
     "knex-paginate": "^3.0.1",
     "pg": "^8.5.1",
     "snake-case": "^3.0.4"
