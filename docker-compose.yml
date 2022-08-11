@@ -1,13 +1,38 @@
-version: "3.1"
+version: "3.9"
 
 services:
   postgres:
     container_name: postgres
     image: postgis/postgis:13-3.1
     restart: always
-    env_file:
-      - ./.env
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: masterkey
+      POSTGRES_DB: visibility
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+  node:
+    build: 
+      context: .
+    # command: npm run migrate && npm run seed
+    environment:
+      DB_SCHEMA: visibility
+      ENVIRONMENT: production
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: visibility
+      POSTGRES_PASSWORD: masterkey
+      DIALECT: postgres
+      PORT: 3000
+      SECRET: MASTERKEY
+      EMAIL_API_KEY: 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
+    depends_on:
+      - postgres
+    ports: 
+      - "3000:3000"
+    # volumes: 
+    #   - .:/usr/app
+
+  
