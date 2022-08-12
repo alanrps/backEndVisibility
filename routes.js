@@ -41,7 +41,7 @@ app
     ]);
 app
     .get('/users/:id', [
-        verifyJwt,
+        // verifyJwt,
         controllerUsers.searchUserById
     ]);
 app
@@ -92,6 +92,7 @@ app
     .get('/ranking', controllerRanking.createRanking);
 app
     .get('/markers/places/:marker_id', getPlaceMarkers);
+
 // app
 //     .delete('/markers/:id', controllerMarkers.deleteMarker);
 

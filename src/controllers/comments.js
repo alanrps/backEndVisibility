@@ -59,6 +59,6 @@ export function insertComments(request, response, next){
             return marker;
         })
         .then(() => createComment(bodySnakeCase, select))
-        .then(([comments]) => response.status(200).send(comments))
+        .then(([comments]) => response.status(201).send(comments))
         .catch(next);
 }
