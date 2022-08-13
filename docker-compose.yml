@@ -27,7 +27,7 @@ services:
       DIALECT: postgres
       PORT: 3000
       SECRET: MASTERKEY
-      EMAIL_API_KEY: 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
+      EMAIL_API_KEY: 
     depends_on:
       - postgres
     ports: 
