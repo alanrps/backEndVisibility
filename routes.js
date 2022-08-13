@@ -4,13 +4,8 @@ const controllerAuthenticate = require('./src/controllers/authenticate');
 const { createMarker } = require('./src/controllers/markers/create');
 const { updateMarker } = require('./src/controllers/markers/update');
 const { getMarkers, getPlaceMarkers } = require('./src/controllers/markers/get');
-const { schemaCreateMarker } = require('./src/validators/markers/create-marker');
 const { verifyJwt } = require('./src/middlewares/auth');
-const controllerRanking = require('./src/controllers/ranking');
-const { searchAchievementsByUserId } = require('./src/controllers/achievements');
-const { createRanking } = require('./src/controllers/ranking');
 const { insertComments, searchComments } = require('./src/controllers/comments');
-const { searchInformationAmountByUser, updateInformationAmountByUser } = require('./src/controllers/informations-amount');
 
 // ENDPOINTS COM AUTENTICAÇÃO
 
@@ -20,51 +15,29 @@ app
 app
     .post('/markers', [
         verifyJwt,
-        createMarker
+        createMarker,
     ]);
 
 app
     .patch('/markers/:id', [
         verifyJwt,
-        updateMarker
+        updateMarker,
     ]);
 
 app
     .patch('/users/:id(\\d+)', [
         verifyJwt,
-        controllerUsers.updateUser
+        controllerUsers.updateUser,
     ]);
 app
     .patch('/users/passwords/:user_id', [
         verifyJwt,
-        controllerUsers.updatePassword
+        controllerUsers.updatePassword,
     ]);
 app
     .get('/users/:id', [
         // verifyJwt,
-        controllerUsers.searchUserById
-    ]);
-app
-    .get('/ranking', [
-        // verifyJwt,
-        createRanking
-    ]);
-app
-    .get('/users/:id/achievements', [
-        // verifyJwt,
-        searchAchievementsByUserId
-    ]);
-
-app
-    .get('/users/:id/informationAmount', [
-        // verifyJwt,
-        searchInformationAmountByUser
-    ]);
-
-app
-    .patch('/users/:id/informationAmount', [
-        // verifyJwt,
-        updateInformationAmountByUser
+        controllerUsers.searchUserById,
     ]);
 
 app
@@ -80,7 +53,7 @@ app
 
 
 // ENDPOINTS SEM AUTENTICAÇÃO
-app 
+app
     .post('/authenticate', controllerAuthenticate.login);
 app
     .get('/markers/:current_position', getMarkers);
@@ -88,8 +61,6 @@ app
     .post('/users', controllerUsers.createUser);
 app
     .patch('/users/:email', controllerUsers.recoveryPassword);
-app
-    .get('/ranking', controllerRanking.createRanking);
 app
     .get('/markers/places/:marker_id', getPlaceMarkers);
 

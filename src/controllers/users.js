@@ -4,7 +4,6 @@ import BadRequest from '../exceptions/http/BadRequest';
 import { generateToken } from '../services/authenticate/token';
 import { updateUserById } from '../services/users/update-user';
 import { searchUserByEmail, searchUserById as searchUserByIdService } from '../services/users/search-user';
-import { createInformationAmountByUser } from '../services/gamification/information-amount';
 import { createUser as createUserService } from '../services/users/create-user';
 import PreconditionFailedException from '../exceptions/http/PreconditionFailedException';
 import NotFoundException from '../exceptions/http/NotFoundException';
@@ -12,20 +11,20 @@ import { comparePassword } from '../services/users/password/compare-password';
 import { encryptPassword } from '../services/users/password/encrypt-password';
 import { convertToSnakeCase } from '../utils/convertToSnakeCase';
 
-export function searchUserById(request, response, next){
+export function searchUserById(request, response, next) {
     const {
-        id
+        id,
     } = request.params;
 
-    const atributtes = [ 'id', 'name', 'phone_number', 'birth_date'];
+    const atributtes = ['id', 'name', 'phone_number', 'birth_date'];
 
-    if(!id){
+    if (!id) {
         return new BadRequest(20);
     }
 
     return searchUserByIdService(id, atributtes)
         .then(([user]) => {
-            if(!user){
+            if (!user) {
                 return new NotFoundException(23);
             }
 
@@ -58,8 +57,7 @@ export function createUser(request, response, next) {
         .then(() => encryptPassword(password))
         .then(hashPassword => Object.assign(bodySnakeCase, { password: hashPassword }))
         .then(() => createUserService(bodySnakeCase, ['id', 'birth_date', 'name', 'phone_number', 'email', 'gender']))
-        .then(([userData]) => createInformationAmountByUser({ user_id: userData.id }) 
-            .then(() => generateToken(userData))
+        .then(([userData]) => generateToken(userData)
             .then(token => Object.assign(userData, { token })))
         .then(userAndToken => response.status(201).send(userAndToken))
         .catch(next);
@@ -122,14 +120,12 @@ export function updatePassword(request, response, next) {
 
             return user;
         })
-        .then(user => {
-            return comparePassword(current_password, user.password)
-                .then(comparisonResult => {
-                    if (!comparisonResult) throw new PreconditionFailedException(4);
+        .then(user => comparePassword(current_password, user.password)
+            .then(comparisonResult => {
+                if (!comparisonResult) throw new PreconditionFailedException(4);
 
-                    return comparisonResult;
-                });
-        })
+                return comparisonResult;
+            }))
         .then(() => encryptPassword(new_password))
         .then(hashPassword => updateUserById(userId, {
             password: hashPassword,
@@ -143,7 +139,7 @@ export function recoveryPassword(request, response, next) {
     const {
         params: {
             email,
-        }
+        },
     } = request;
 
     return searchUserByEmail(email)
@@ -153,18 +149,14 @@ export function recoveryPassword(request, response, next) {
             }
             return user;
         })
-        .then(([user]) => {
-            return Promise
-                .resolve()
-                .then(() => generatePassword())
-                .then(newPassword => {
-                    return encryptPassword(newPassword)
-                        .then(hashPassword => updateUserById(user.id, {
-                            password: hashPassword,
-                        }, ["password"]))
-                        .then(([{ password }]) => ({ ...user, password, new_password: newPassword }))
-                })
-        })
+        .then(([user]) => Promise
+            .resolve()
+            .then(() => generatePassword())
+            .then(newPassword => encryptPassword(newPassword)
+                .then(hashPassword => updateUserById(user.id, {
+                    password: hashPassword,
+                }, ['password']))
+                .then(([{ password }]) => ({ ...user, password, new_password: newPassword }))))
         .then(user => sendEmailMessage(user.email, user.new_password))
         .then(() => response.status(204).send({}))
         .catch(next);

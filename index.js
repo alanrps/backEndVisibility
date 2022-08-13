@@ -4,15 +4,6 @@ const { json } = require('express');
 const cors = require('cors');
 const routes = require('./routes');
 
-const knex = require('./database');
-const CronJob = require('cron').CronJob;
-
-const jobWeekly = new CronJob('00 00 * * * 0', async () => {
-    console.info('tarefa semanal agendada');
-    return knex({ ia: 'information_amount' })
-        .update({ weekly_points: 0 });
-}, null, true, 'America/Sao_Paulo');
-
 const { PORT } = process.env;
 
 api.use(json());

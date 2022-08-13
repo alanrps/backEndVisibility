@@ -12,6 +12,7 @@
         "mocha": true
     },
     "rules": {
+        "linebreak-style": 0,
         "global-require": "off",
         "import/no-dynamic-require": "off",
         "no-plusplus": "off",
