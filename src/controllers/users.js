@@ -57,7 +57,8 @@ export function createUser(request, response, next) {
         .then(() => encryptPassword(password))
         .then(hashPassword => Object.assign(bodySnakeCase, { password: hashPassword }))
         .then(() => createUserService(bodySnakeCase, ['id', 'birth_date', 'name', 'phone_number', 'email', 'gender']))
-        .then(([userData]) => generateToken(userData)
+        .then(([userData]) => Promise.resolve()
+            .then(() => generateToken(userData))
             .then(token => Object.assign(userData, { token })))
         .then(userAndToken => response.status(201).send(userAndToken))
         .catch(next);
