@@ -9,8 +9,5 @@ exports.seed = knex => knex('users').del()
             birth_date: '1998-11-24',
             gender: 'MALE',
             is_admin: true,
-        }, ['id']
-    ))
-    .then(([createdUser]) => knex('infomation_amount').insert({
-        user_id: createdUser.id,
-    }));
+        }, ['id'],
+    ));
