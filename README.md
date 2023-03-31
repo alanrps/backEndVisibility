@@ -1,5 +1,8 @@
 # Visibility API
 
+## Comandos
+- $ npx init
+
 ## Objetivo
 
 **API REST** que fornece informações para uma aplicação **Android**. A aplicação tem o intuíto de por meio de um sistema de mapas, realizar a classificação de locais de acordo com as suas características de acessibilidade e identificação de vagas para deficientes. O aplicativo ainda conta com um sistema de gamificação com o recurso de pontos, níveis, placar de líderes e conquistas.
