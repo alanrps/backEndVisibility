@@ -31,9 +31,9 @@ export class InformationAmountControllerImpl implements InformationAmountControl
         this.achievementService = achievementService;
     }
 
-    getByUser(request: Request, response: Response, next: NextFunction){
+    getByUser(request: Request, response: Response, next: NextFunction) {
         const {
-            id
+            id,
         } = request.params;
     
         if(!id){
@@ -87,7 +87,7 @@ export class InformationAmountControllerImpl implements InformationAmountControl
             .catch(next);
     }
 
-    updateByUser(request: Request, response: Response, next: NextFunction) {
+    updateByUser(request: Request<{ id:number }>, response: Response, next: NextFunction) {
         const {
             params: {
                 id,

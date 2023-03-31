@@ -26,7 +26,7 @@ export class CommentsControllerIml implements CommentsController {
         this.markerService = markerService;
     }
 
-    getByMarker(request: Request, response: Response, next: NextFunction) {
+    getByMarker(request: Request<{id: number}>, response: Response, next: NextFunction) {
         const { id: markerId } = request.params;
     
         const select = [

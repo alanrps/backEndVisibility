@@ -21,7 +21,7 @@ export class PasswordControllerImpl implements PasswordController {
         this.emailService = emailService;
     }
 
-    update(request: Request, response: Response, next: NextFunction): Promise<Response | NextFunction>{
+    update(request: Request<{ user_id:number }>, response: Response, next: NextFunction): Promise<Response | NextFunction>{
         const {
             params: {
                 user_id: userId,

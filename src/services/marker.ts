@@ -16,7 +16,7 @@ interface MarkerRepository {
 
 
 export class MarkerService implements MarkerRepository {
-    getByPosition(returnData: Array<string | Knex.Raw>, currentPosition, filter?): Promise<Array<Marker>> {
+    getByPosition(returnData: Array<string | Knex.Raw | {}>, currentPosition, filter?): Promise<Array<Marker>> {
         console.log(filter);
     
         const subqueryPlaces = knex({ m: 'markers' })

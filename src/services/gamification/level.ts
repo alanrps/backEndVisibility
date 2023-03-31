@@ -1,11 +1,11 @@
 import knex from '../../../database';
 
 interface LevelRepository {
-    getData(returnData: Array<string> = ['*'], level: number);
+    getData(returnData: Array<string | Object> = ['*'], level: number);
 }
 
 export class LevelService implements LevelRepository {
-    getData(returnData: Array<string> = ['*'], level?: number){
+    getData(returnData: Array<string | Object> = ['*'], level?: number){
         const query = knex
             .select(returnData)
             .from({ l: 'levels' })

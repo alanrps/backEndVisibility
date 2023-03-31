@@ -14,12 +14,13 @@ export class RankingControllerImpl implements RankingController {
     constructor(@inject(RankingService) rankingService: RankingService){
         this.rankingService = rankingService;
     }
-    create(request: Request, response: Response, next: NextFunction){
+    create(request: Request<{},{},{},{ page?: number }>, response: Response, next: NextFunction){
+        // ! Verificar quando não passo a query, o que retorna
         const {
             query = {},
         } = request;
     
-        return this.rankingService.create(Number(query.page) ?? 1)
+        return this.rankingService.create(query.page ?? 1)
             .then(ranking => response.status(200).send(ranking))
             .catch(next);
     }

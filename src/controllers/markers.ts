@@ -32,6 +32,7 @@ export class MarkerControllerImpl implements MarkerController {
                 categories = null,
                 acessibilities = null
             },
+            // ! Verificar o filtro, pois não é passado, nem na query, params ou body
             filter = {},
         } = request;
     
@@ -58,7 +59,7 @@ export class MarkerControllerImpl implements MarkerController {
             .catch(next);
     }
 
-    delete(request: Request, response: Response, next: NextFunction): Promise<void | Response> {
+    delete(request: Request<{ id:number }>, response: Response, next: NextFunction): Promise<void | Response> {
         const {
             id,
         } = request.params;
@@ -70,7 +71,7 @@ export class MarkerControllerImpl implements MarkerController {
             .catch(next);
     }
 
-    update(request: Request, response: Response, next: NextFunction) : Promise<void | Response>{
+    update(request: Request<{ id: number }>, response: Response, next: NextFunction) : Promise<void | Response>{
         const {
             body: params,
         } = request;
@@ -82,7 +83,7 @@ export class MarkerControllerImpl implements MarkerController {
         return Promise
             .resolve()
             // Verificar se o marker existe
-            .then(() => this.markerService.update(Number(id), params))
+            .then(() => this.markerService.update(id, params))
             .then(() => response.status(200).send({}))
             .catch(next);
     }
@@ -127,7 +128,7 @@ export class MarkerControllerImpl implements MarkerController {
             .catch(next);
     }
 
-    updateMarker(request, response, next) {
+    updateMarker(request: Request<{ id: number }>, response: Response, next: NextFunction) {
         const {
             params: {
                 id,
@@ -138,7 +139,7 @@ export class MarkerControllerImpl implements MarkerController {
         console.log(id);
         console.log(body);
     
-        const marker_id = parseInt(id);
+        const marker_id = id;
         const bodySnakeCase = convertToSnakeCase(body);
     
         const {

@@ -24,7 +24,7 @@ export class AchievementControllerImpl implements AchievementController {
         this.achievementService = achievementService;
     }
 
-    getById(request: Request, response: Response, next: NextFunction) {
+    getById(request: Request<{ id: number }>, response: Response, next: NextFunction) {
         const {
             params: {
                 id: userId = null,

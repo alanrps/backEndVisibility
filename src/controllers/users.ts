@@ -34,7 +34,7 @@ export class UserControllerImpl implements UserController {
         this.informationAmountService = informationAmountService;
     }
     
-    getById(request: Request, response: Response, next: NextFunction): Promise<void | Response>{
+    getById(request: Request<{ id: number }>, response: Response, next: NextFunction): Promise<void | Response>{
         const { id } = request.params;
     
         const atributtes = ['id', 'name', 'phone_number', 'birth_date'];
@@ -43,7 +43,7 @@ export class UserControllerImpl implements UserController {
             return new BadRequest(20);
         }
         
-        return this.userService.getById(Number(id), atributtes)
+        return this.userService.getById(id, atributtes)
             .then(([user]) => {
                 if(!user){
                     return new NotFoundException(23);
@@ -84,7 +84,7 @@ export class UserControllerImpl implements UserController {
             .catch(next);
     }
 
-    delete(request: Request, response: Response, next: NextFunction): Promise<void | Response>{
+    delete(request: Request<{ id: number }>, response: Response, next: NextFunction): Promise<void | Response>{
         const {
             id,
         } = request.params;
@@ -96,7 +96,7 @@ export class UserControllerImpl implements UserController {
             .catch(next);
     }
 
-    update(request: Request, response: Response, next: NextFunction): Promise<void | Response>{
+    update(request: Request<{ id: number }>, response: Response, next: NextFunction): Promise<void | Response>{
         const {
             params: {
                 id: userId,
@@ -110,14 +110,14 @@ export class UserControllerImpl implements UserController {
             birth_date,
         } = convertToSnakeCase(userData);
     
-        return this.userService.getById(Number(userId))
+        return this.userService.getById(userId)
             .then(([user]) => {
                 if (!user) {
                     throw new PreconditionFailedException(23);
                 }
                 return user;
             })
-            .then(() => this.userService.updateById(Number(userId), { name, phone_number, birth_date }, ['id', 'name', 'phone_number', 'email', 'birth_date', 'gender']))
+            .then(() => this.userService.updateById(userId, { name, phone_number, birth_date }, ['id', 'name', 'phone_number', 'email', 'birth_date', 'gender']))
             .then(([updatedUser]) => response.status(200).send(updatedUser))
             .catch(next);
     }
