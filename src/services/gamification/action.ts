@@ -1,11 +1,20 @@
 import knex from '../../../database';
 
+interface Action {
+    id?: number
+    points: number,
+    description: string,
+    created_at: Date,
+    updated_at: Date,
+    deleted_at: Date,
+}
+
 interface ActionRepository {
-    get(returnData: Array<string> = ['*'], action: string);
+    get(returnData: Array<string>, action: string): Promise<Array<Action>>;
 }
 
 export class ActionService implements ActionRepository {
-    async get(returnData: Array<string> = ['*'], action?: string){
+    get(returnData: Array<string> = ['*'], action?: string): Promise<Array<Action>> {
         const query = knex
             .select(returnData)
             .from({ a: 'actions' })

@@ -1,13 +1,33 @@
 import knex from '../../database';
 
-class Place {
-    constructor(){}
+enum classify {
+    'ACCESSIBLE', 
+    'NOT ACCESSIBLE', 
+    'PARTIALLY'
+}
+
+enum spaceType {
+    'PRIVATE', 
+    'PUBLIC'
+}
+
+interface Place {
+    id?: number,
+    marker_id: number,
+    category_id: string,
+    name: string,
+    classify: classify,
+    space_type: spaceType,
+    description: number,
+    created_at: Date,
+    updated_at: Date,
+    deleted_at: Date,
 }
 
 interface PlaceRepository {
     create(place: Place): Promise<Place>;
-    update(id: number, place: Place, returnData: Array<string>): Promise<Place | null>;
-    getById(select: Array<string>, id: number): Promise<Place>;
+    update(id: number, place: Place, returnData: Array<string>) : Promise<Place | null>;
+    getById(select: Array<string>, id: number) : Promise<Array<Place>>;
 }
 
 export class PlaceService implements PlaceRepository {
@@ -26,7 +46,7 @@ export class PlaceService implements PlaceRepository {
             .catch(reject));
     }
 
-    getById(select: Array<string>, id: number) : Promise<Place> {
+    getById(select: Array<string>, id: number) : Promise<Array<Place>> {
         return knex({ m: 'markers' })
             .select(select)
             .innerJoin(({ p: 'places' }), builder => {

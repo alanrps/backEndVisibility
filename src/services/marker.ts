@@ -2,21 +2,31 @@
 import knex from '../../database';
 import { Knex } from 'knex';
 
-class Marker {
-    constructor(){}
+interface Marker {
+    id?: number,
+    user_id: number,
+    markers_type_id: string,
+    coordinates: string,
+    // ! Verificar se realmente é um número
+    last_updated: number,
+    denounced: boolean,
+    created_at: Date,
+    updated_at: Date,
+    deleted_at: Date,
 }
 
+
 interface MarkerRepository {
-    getByPosition(): Promise<Array<Marker>>;
-    getById(returnData: Array<string>, id: number): Promise<Marker>;
+    getByPosition(returnData: Array<string | Knex.Raw | {}>, currentPosition: string, filter: { categories: [], acessibilities: [] }): Promise<Array<Marker>>;
+    getById(returnData: Array<string>, id: number) : Promise<Array<Marker>>;
     update(id: number, marker: Marker, returnData: Array<string>): Promise<Marker | null>;
     delete(id: number, returnData: Array<string>): Promise<Marker | null>;
-    create(marker: Marker, returnData: Array<string>) : Promise<Marker>;
+    create(marker: Marker, returnData: Array<string | Knex.Raw>) : Promise<Array<Marker>>;
 }
 
 
 export class MarkerService implements MarkerRepository {
-    getByPosition(returnData: Array<string | Knex.Raw | {}>, currentPosition, filter?): Promise<Array<Marker>> {
+    getByPosition(returnData: Array<string | Knex.Raw | {}>, currentPosition: string, filter: { categories: [], acessibilities: [] }): Promise<Array<Marker>> {
         console.log(filter);
     
         const subqueryPlaces = knex({ m: 'markers' })
@@ -57,7 +67,7 @@ export class MarkerService implements MarkerRepository {
                 .whereNull('m.deleted_at');
     }
 
-    getById(returnData: Array<string>, id: number) : Promise<Marker> {
+    getById(returnData: Array<string>, id: number) : Promise<Array<Marker>> {
         return knex({ m: 'markers' })
             .select(returnData)
             .where('m.id', id)
@@ -73,7 +83,7 @@ export class MarkerService implements MarkerRepository {
             .catch(reject));
     }
 
-    create(marker: Marker, returnData: Array<string | Knex.Raw>) : Promise<Marker>{
+    create(marker: Marker, returnData: Array<string | Knex.Raw>) : Promise<Array<Marker>>{
         return knex('markers')
             .insert(marker, returnData);
     }

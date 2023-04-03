@@ -1,12 +1,26 @@
 import { sign } from 'jsonwebtoken';
 const { SECRET } = process.env;
 
-interface User {
-    id: number,
-    email: string,
-    name: string,
-    phone_number: string
+enum Gender {
+    'MALE',
+    'FEMALE',
+    'OTHER'
 }
+
+interface User {
+    id?: number
+    name: string, 
+    phone_number: string,
+    email: string,
+    password: string,
+    birth_date: Date, 
+    gender: Gender,
+    is_admin: boolean,
+    created_at: Date,
+    updated_at: Date,
+    deleted_at: Date,
+}
+
 
 interface Token {
     generate(userData: User);

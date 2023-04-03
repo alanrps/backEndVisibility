@@ -6,8 +6,18 @@ enum Gender {
     'OTHER'
 }
 
-class User {
-    constructor(name: string, phone_number: string, email: string, password: string, birth_date: Date, gender: Gender, is_admin: boolean){}
+interface User {
+    id?: number,
+    name: string, 
+    phone_number: string,
+    email: string,
+    password: string,
+    birth_date: Date, 
+    gender: Gender,
+    is_admin: boolean,
+    created_at: Date,
+    updated_at: Date,
+    deleted_at: Date,
 }
 
 interface UserRepository {
@@ -19,14 +29,14 @@ interface UserRepository {
 }
 
 export class UserService implements UserRepository {
-    create(user: User, returnData: Array<string> = ['id']) : Promise<User> {
+    create(user: User, returnData: Array<string> = ['id']) : Promise<Array<User>> {
         return new Promise((resolve, reject) => knex('users')
             .insert(user, returnData)
             .then(resolve)
             .catch(reject));
     }
 
-    updateById(id: number, user: User, returnData: Array<string> = ['id']): Promise<User> {
+    updateById(id: number, user: User, returnData: Array<string> = ['id']): Promise<Array<User>> {
         return new Promise((resolve, reject) => knex({ us: 'users' })
             .update(user, returnData)
             .whereNull('us.deleted_at')
@@ -35,7 +45,7 @@ export class UserService implements UserRepository {
             .catch(reject));
     }
 
-    getById(id: number, returnData: Array<string> = ['*']): Promise<User> {
+    getById(id: number, returnData: Array<string> = ['*']): Promise<Array<User>> {
         return new Promise((resolve, reject) => knex({ us: 'users' })
             .select(returnData)
             .where('us.id', '=', id)
@@ -44,7 +54,7 @@ export class UserService implements UserRepository {
             .catch(reject));
     }
 
-    getByEmail(email: string, returnData: Array<string> = ['*']): Promise<User> {
+    getByEmail(email: string, returnData: Array<string> = ['*']): Promise<Array<User>> {
         return new Promise((resolve, reject) => knex({ us: 'users' })
             .select(returnData)
             .where('us.email', '=', email)
