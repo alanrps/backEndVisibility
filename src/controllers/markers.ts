@@ -1,4 +1,4 @@
-import knex from '../../database';
+import knex from '../config/database';
 import { convertToSnakeCase } from '../../utils/convertToSnakeCase';
 
 import { Request, Response, NextFunction } from 'express';

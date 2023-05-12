@@ -1,6 +1,6 @@
-import BadRequest from '../exceptions/http/BadRequest';
-import PreconditionFailedException from '../exceptions/http/PreconditionFailedException';
-import NotFoundException from '../exceptions/http/NotFoundException';
+import {BadRequest} from '../exceptions/http/BadRequest';
+import {PreconditionFailedException} from '../exceptions/http/PreconditionFailedException';
+import {NotFoundException} from '../exceptions/http/NotFoundException';
 
 import { sendEmailMessage } from '../services/email';
 import { convertToSnakeCase } from '../utils/convertToSnakeCase';
@@ -34,7 +34,7 @@ export class UserControllerImpl implements UserController {
         this.informationAmountService = informationAmountService;
     }
     
-    getById(request: Request<{ id: number }>, response: Response, next: NextFunction): Promise<void | Response>{
+    getById(request: Request<{ id: number }>, response: Response, next: NextFunction): Promise<void | Response> {
         const { id } = request.params;
     
         const atributtes = ['id', 'name', 'phone_number', 'birth_date'];
@@ -84,7 +84,7 @@ export class UserControllerImpl implements UserController {
             .catch(next);
     }
 
-    delete(request: Request<{ id: number }>, response: Response, next: NextFunction): Promise<void | Response>{
+    delete(request: Request<{ id: number }>, response: Response, next: NextFunction): Promise<void | Response> {
         const {
             id,
         } = request.params;
@@ -96,7 +96,7 @@ export class UserControllerImpl implements UserController {
             .catch(next);
     }
 
-    update(request: Request<{ id: number }>, response: Response, next: NextFunction): Promise<void | Response>{
+    update(request: Request<{ id: number }>, response: Response, next: NextFunction): Promise<void | Response> {
         const {
             params: {
                 id: userId,
@@ -109,7 +109,9 @@ export class UserControllerImpl implements UserController {
             phone_number,
             birth_date,
         } = convertToSnakeCase(userData);
-    
+        
+        const returnData = ['id', 'name', 'phone_number', 'email', 'birth_date', 'gender'];
+
         return this.userService.getById(userId)
             .then(([user]) => {
                 if (!user) {
@@ -117,7 +119,7 @@ export class UserControllerImpl implements UserController {
                 }
                 return user;
             })
-            .then(() => this.userService.updateById(userId, { name, phone_number, birth_date }, ['id', 'name', 'phone_number', 'email', 'birth_date', 'gender']))
+            .then(() => this.userService.updateById(userId, { name, phone_number, birth_date }, returnData))
             .then(([updatedUser]) => response.status(200).send(updatedUser))
             .catch(next);
     }

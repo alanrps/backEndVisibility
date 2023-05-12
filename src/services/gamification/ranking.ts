@@ -1,12 +1,31 @@
-import knex from '../../../database';
+import knex from '../../config/database';
 
-interface RankingRepository {
-    create(page: number);
+interface Pagination {
+    total: number,
+    lastPage: number,
+    perPage: number,
+    currentPage: number,
+    from: number,
+    to: number
 }
 
+interface Ranking {
+    name: string,
+    weekly_points: number,
+    level: number
+}
+
+interface RankingPaginate {
+    ranking: Ranking,
+    pagination: Pagination
+}
+
+interface RankingRepository {
+    create(page: number): Promise<RankingPaginate>;
+}
 
 export class RankingService implements RankingRepository {
-    create(page: number){
+    create(page: number): Promise<RankingPaginate>{
         return knex
             .select(['name', 'weekly_points', 'level'])
             .from({ u: 'users' })

@@ -1,5 +1,5 @@
-import BadRequest from '../exceptions/http/BadRequest';
-import PreconditionFailedException from '../exceptions/http/PreconditionFailedException';
+import {BadRequest} from '../exceptions/http/BadRequest';
+import {PreconditionFailedException} from '../exceptions/http/PreconditionFailedException';
 
 import { convertToSnakeCase } from '../utils/convertToSnakeCase';
 
@@ -10,7 +10,7 @@ import { UserService } from '../services/users';
 import { MarkerService } from '../services/marker';
 
 interface CommentsController {
-    getByMarker(request: Request, response: Response, next: NextFunction);
+    getByMarker(request: Request<{id: number}>, response: Response, next: NextFunction);
     create(request: Request, response: Response, next: NextFunction);
 }
 
@@ -58,7 +58,7 @@ export class CommentsControllerIml implements CommentsController {
         }
     
         const bodySnakeCase = convertToSnakeCase(body);
-        const select = ['id', 'description'];
+        const returnData = ['id', 'description'];
     
         return this.userService.getById(body.userId, ['id'])
             .then(user => {
@@ -76,7 +76,7 @@ export class CommentsControllerIml implements CommentsController {
     
                 return marker;
             })
-            .then(() => this.commentsService.create(bodySnakeCase, select))
+            .then(() => this.commentsService.create(bodySnakeCase, returnData))
             .then(([comments]) => response.status(201).send(comments))
             .catch(next);
     }

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
-import BadRequest from '../exceptions/http/BadRequest';
-import NotFoundException from '../exceptions/http/NotFoundException';
+import {BadRequest} from '../exceptions/http/BadRequest';
+import {NotFoundException} from '../exceptions/http/NotFoundException';
 
 import { injectable, inject } from 'inversify';
 import { UserService } from '../services/users';
@@ -31,7 +31,7 @@ export class InformationAmountControllerImpl implements InformationAmountControl
         this.achievementService = achievementService;
     }
 
-    getByUser(request: Request, response: Response, next: NextFunction) {
+    getByUser(request: Request<{ id: number }>, response: Response, next: NextFunction) {
         const {
             id,
         } = request.params;

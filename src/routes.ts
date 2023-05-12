@@ -1,6 +1,6 @@
 
 import 'reflect-metadata';
-import container from './src/config/container';
+import container from './config/container';
 
 import { Router } from 'express';
 const router = Router();
@@ -9,13 +9,13 @@ const controllerUsers = require('./src/controllers/users');
 const { getMarkers, getPlaceMarkers } = require('./src/controllers/markers/get');
 const { verifyJwt } = require('./src/middlewares/auth');
 
-import { UserControllerImpl } from './src/controllers/users';
-import { MarkerControllerImpl } from './src/controllers/markers';
-import { RankingControllerImpl } from './src/controllers/ranking';
-import { CommentsControllerIml } from './src/controllers/comments';
-import { InformationAmountControllerImpl } from './src/controllers/information-amount';
-import { AuthenticateControllerImpl } from './src/controllers/authenticate';
-import { AchievementControllerImpl } from './src/controllers/achievement';
+import { UserControllerImpl } from './controllers/users';
+import { MarkerControllerImpl } from './controllers/markers';
+import { RankingControllerImpl } from './controllers/ranking';
+import { CommentsControllerIml } from './controllers/comments';
+import { InformationAmountControllerImpl } from './controllers/information-amount';
+import { AuthenticateControllerImpl } from './controllers/authenticate';
+import { AchievementControllerImpl } from './controllers/achievement';
 
 const userController = container.resolve<UserControllerImpl>(UserControllerImpl);
 const markerController = container.resolve<MarkerControllerImpl>(MarkerControllerImpl);

@@ -8,7 +8,7 @@ const api = express();
 import cors from 'cors';
 import { CronJob } from 'cron';
 import routes from './routes';
-import knex from './database';
+import knex from './config/database';
 
 
 const jobWeekly = new CronJob('00 00 * * * 0', async () => {

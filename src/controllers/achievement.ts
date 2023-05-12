@@ -1,6 +1,6 @@
-import BadRequest from '../exceptions/http/BadRequest';
-import NotFoundException from '../exceptions/http/NotFoundException';
-import InternalServerError from '../exceptions/http/InternalServerError';
+import { BadRequest } from '../exceptions/http/BadRequest';
+import { NotFoundException } from '../exceptions/http/NotFoundException';
+import { InternalServerError } from '../exceptions/http/InternalServerError';
 
 import { Request, Response, NextFunction } from 'express';
 import { inject, injectable } from 'inversify';
@@ -9,7 +9,7 @@ import { AchievementService } from '../services/gamification/achievement';
 import { InformationAmountService } from '../services/gamification/information-amount';
 
 interface AchievementController {
-    getById(request: Request, response: Response, next: NextFunction);
+    getById(request: Request<{ id: number }>, response: Response, next: NextFunction);
 }
 
 @injectable()

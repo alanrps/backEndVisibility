@@ -1,5 +1,5 @@
 
-import knex from '../../database';
+import knex from '../config/database';
 import { Knex } from 'knex';
 
 interface Marker {

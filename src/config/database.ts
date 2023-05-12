@@ -4,23 +4,10 @@ import { attachPaginate } from 'knex-paginate';
 
 const env = process.env.ENVIRONMENT || 'development';
 
-const {
-    client,
-    connection,
-    migrations,
-    seeds,
-} = knexConfig[env];
+const clientConfigs: Knex.Config = knexConfig[env];
 
 attachPaginate();
 
-const config: Knex.Config = {
-  client,
-  connection,
-  migrations,
-  seeds,
-  debug: false,
-};
-
-const knexInstance = knex(config);
+const knexInstance = knex({ ...clientConfigs, debug: false });
 
 export default knexInstance;

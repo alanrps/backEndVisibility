@@ -1,4 +1,4 @@
-import knex from '../../database';
+import knex from '../config/database';
 
 enum classify {
     'ACCESSIBLE', 

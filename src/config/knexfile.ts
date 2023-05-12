@@ -1,4 +1,6 @@
-const connection = {
+import { Knex } from 'knex';
+
+const connection: Knex.ConnectionConfig = {
     host: process.env.POSTGRES_HOST || 'localhost',
     user: process.env.POSTGRES_USER || 'postgres',
     database: process.env.POSTGRES_DB || 'visibility',
@@ -7,7 +9,7 @@ const connection = {
     ssl: { rejectUnauthorized: false },
 };
 
-export default {
+const clientConfigs: { development: Knex.Config, testing: Knex.Config, production: Knex.Config } = {
     development: {
         client: 'pg',
         connection,
@@ -18,7 +20,6 @@ export default {
             directory: './seeds',
         },
     },
-
     testing: {
         client: 'pg',
         connection,
@@ -29,7 +30,6 @@ export default {
             directory: './seeds',
         },
     },
-
     production: {
         client: 'pg',
         connection,
@@ -41,3 +41,5 @@ export default {
         },
     },
 };
+
+export default clientConfigs;
